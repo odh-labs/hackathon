@@ -1,14 +1,14 @@
 ---
 title: Understanding the hackathon environment
 exercise: 1
-date: '2024-04-14'
-tags: ['openshift','virtualisation','kubernetes','kubevirt']
+date: '2024-06-05'
+tags: ['openshift','ai','kubernetes']
 draft: false
 authors: ['default']
 summary: "Let's get underway with the hackathon."
 ---
 
-Welcome to the OpenShift Virtualisation Hackathon! Here you'll have a chance to build your container native virtualisation prowess. Exercises will award points for each correct solution. 
+Welcome to the OpenShift AI Hackathon! Here you'll have a chance to build your AI prowess. Exercises will award points for each correct solution. 
 
 You're in a race to reach the highest score before the session concludes! If multiple teams complete all exercises so share points totals a further ranking will be done by elapsed time based on when slack messages are sent.
 
@@ -23,35 +23,37 @@ You're in a race to reach the highest score before the session concludes! If mul
 | *Acme Financial Services*                                                     |
 </Zoom>
 
-Acme Financial Services is a large bank based in Australia. They have a number of virtual machine workloads that are running on a traditional hypervisor and are considering moving these to another platform.
+Acme Financial Services is a large bank based in Australia. They have been tinkering with deploying AI models and are now ready to put a proper AI platform in place and operationalise their AI model deployment. 
 
-One of the potential options for Acme Financial Services is to adopt Red Hat OpenShift Virtualisation as a container native virtualisation platform. 
+One of the potential options for Acme Financial Services is to adopt Red Hat OpenShift AI as an ML OPs platform. 
 
-Your hackathon team are the pre-sales technical team engaging with Acme technical teams to secure buy-in for a large scale migration to proceed.
+Your hackathon team are the pre-sales technical team engaging with Acme technical teams to secure buy-in for a large scale production deployment to proceed.
 
 
 ## 1.1 - Understanding the environment
 
-For this challenge you'll be given a fresh bare metal OpenShift 4 cluster **with the OpenShift Virtualisation operator already installed**.
+For this challenge you'll be given two OpenShift clusters
+- an AWS ROSA OpenShift 4 cluster representing the ACME cloud environment 
+- a Single Node OpenShift cluster representing the ACME On Premises environment
 
-All challenge tasks must be performed on this cluster so your solutions can be graded successfully.
-
+All challenge tasks must be performed on these clusters so your solutions can be graded successfully.
+Some challenges wil require the use of specific clusters
 You can and are encouraged to use any supporting documentation or other resources in order to tackle each of the challenge tasks.
 
 <Zoom>
 |![cluster](/workshops/static/images/hackathon/cluster.png)                     | 
 |:-----------------------------------------------------------------------------:|
-| *OpenShift bare metal cluster console*                                        |
+| *OpenShift cluster console*                                        |
 </Zoom>
 
 
 ## 1.2 - Obtain your environment
 
-Working in a small team you will have one shared cluster for team members to share. Your team will have a name allocated already.
+Working in a small team you will have two shared clusters for team members to use. Your team will have a name allocated already.
 
 To get underway open your web browser and navigate to this link to allocate an environment for your team https://demo.redhat.com/workshop/s72ya3.
 
-Register for an environment using `[team name]@redhat.com` and the password provided by your hackathon organisers. Registering with a team email will mean all your team members will be able to see the same cluster details for your shared team cluster.
+Register for an environment using `[team name]@redhat.com` and the password provided by your hackathon organisers. Registering with a team email will mean all your team members will be able to see the same cluster details for your shared team clusters.
 
 <Zoom>
 |![cluster](/workshops/static/images/hackathon/workshop.png)                    | 
@@ -62,7 +64,7 @@ Register for an environment using `[team name]@redhat.com` and the password prov
 
 ## 1.4 - Confirm environment access
 
-If your team have secured an environment and are ready to start the challenge please post a message in `#event-anz-ocp-virt-hackathon` with the message:
+If your team have secured an environment and are ready to start the challenge please post a message in `#event-anz-ocp-ai-hackathon` with the message:
 
 > [team name] have logged into an environment and are starting the challenge!
 
