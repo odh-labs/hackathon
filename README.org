@@ -1,32 +1,83 @@
-#+TITLE: OpenShift Workshops
-#+AUTHOR: James Blair
-#+DATE: <2023-12-04 Mon>
+#+TITLE: OpenShift AI Hackathon
+#+AUTHOR: James Blair, Tom Corcoran, Neo Xu
+#+DATE: <2024-06-06 Thu>
 
-This repository contains a basic [[https://nextjs.org/][nextjs]] frontend designed to be exported as a static site and served via [[https://pages.github.com/][github pages]].
+This repository contains a basic [[https://nextjs.org/][nextjs]] frontend designed to be exported as a static site and served via [[https://pages.github.com/][github pages]], for the purposes of running an OpenShift AI hackathon.
 
-The frontend is used to serve workshop instructions for several workshops.
+Below are the instructions for manually setting up an environment to run the hackathon.
 
-** Local development
+* Cluster provisioning
 
-To set up a local development environment run the following:
+** Cloud cluster
 
-#+begin_src bash
-# Install dependencies
-npm install
+Each team will require an AWS ROSA cluster, which we will provision via the [[https://demo.redhat.com/catalog?item=babylon-catalog-prod/sandboxes-gpte.rosa.prod&utm_source=webapp&utm_medium=share-link][Red Hat Demo System]]. When requesting the environments we enable the workshop user interface.
 
-# Build and serve the site
-npm run build && npm run serve
+** On-premises cluster
+
+Each team will require a Single Node OpenShift cluster, representing their teams on premises environment which we will provision via the [[https://demo.redhat.com/catalog?item=babylon-catalog-prod/openshift-cnv.ocpmulti-single-node-cnv.prod&utm_source=webapp&utm_medium=share-link][Red Hat Demo System]]. When requesting the environments we enable the workshop user interface.
+
+
+* Cluster setup - on-premises
+
+For each cluster provisioned for the hackathon, the following steps need to be performed:
+
+
+** Log in to cluster
+
+#+begin_src tmux
+oc login --web <api-route>
+#+end_src
+
+** Install minio via oc
+
+#+begin_src tmux
+oc new-project minio
+
+oc apply -f setup/minio-setup.yaml
+
+oc rollout status minio --watch
+#+end_src
+
+** TODO Consider creating a cluster web terminal pod
+
+** Download model from huggingface
+
+#+begin_src tmux
+HUGGINGFACE_TOKEN="HUGGINGFACE_TOKEN"
+pip install --upgrade huggingface_hub
+huggingface-cli login --token "${HUGGINGFACE_TOKEN}"
+git clone https://huggingface.co/instructlab/granite-7b-lab
+#+end_src
+
+** Upload model to on-prem cluster minio
+
+TODO Run aws configure and pull values out of that automatically.
+
+#+begin_src tmux
+export AWS_ACCESS_KEY_ID=<placeholder>
+export AWS_SECRET_ACCESS_KEY=<placeholder>
+export AWS_DEFAULT_REGION=<placeholder>
+export AWS_S3_ENDPOINT=$(oc get route minio-api -o jsonpath='.spec.host')
+export AWS_S3_BUCKET="models"
+
+python3 setup/minio-upload.py
 #+end_src
 
 
-** Exporting static site
+* Cluster setup - cloud
 
-To export the site to static html to serve for example via github pages, run:
+** Login to rosa cluster
 
-#+begin_src bash
-# Install dependencies
-npm install
+#+begin_src tmux
+oc login --web <api-route>
+#+end_src
 
-# Build and export the site
-npm run build && npm run export
+** Install minio via oc
+
+#+begin_src tmux
+oc new-project minio
+
+oc apply -f setup/minio-setup.yaml
+
+oc rollout status minio --watch
 #+end_src
