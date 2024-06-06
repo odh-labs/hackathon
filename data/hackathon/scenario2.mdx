@@ -1,0 +1,53 @@
+---
+title: Enabling GPU accelerators
+exercise: 2
+date: '2024-06-06'
+tags: ['openshift','ai','kubernetes']
+draft: false
+authors: ['default']
+summary: "How do we use GPU accelerators??"
+---
+
+As a sales team you've got an upcoming demo with the Acme Financial Services data science team, who have asked you to show them how to enable GPU support in Red Hat OpenShift Service on AWS (ROSA).
+
+You've spun up a demo environment to show them how it's done.
+
+## 2.1 - Add Cluster GPU Machine Pool
+Your first task for this challenge is to add a new Machine Pool using the instance type `g5.8xlarge`
+Name it `gpu`. Set the count to 1.
+
+You can do this either through 
+- the Red Hat Hybrid Cloud Console (https://console.redhat.com/openshift)
+- or the ROSA CLI (https://console.redhat.com/openshift/token/show)
+
+
+Documentation you may find helpful is:
+- https://cloud.redhat.com/experts/rosa/gpu/
+
+
+## 2.2 - Install required operators
+
+While the GPU machine is provisioning, the next step is to install the two required operators:
+- Node Feature Discovery (NFD)
+- Nvidia GPU Operator
+
+Install the following Custom resources
+- NodeFeatureDiscovery
+- ClusterPolicy
+
+The next steps should not be done until the GPU node is fully provisioned 
+You'll know this is complete using the following command
+```bash
+oc get node -l nvidia.com/gpu.present
+```
+
+
+
+
+## 2.3 - Check your work
+
+If your GPU is now running and labeled successfully, please post a message in `#event-anz-ocp-ai-hackathon` with the message:
+
+> Please review [team name] solution for exercise 2.
+
+This exercise is worth `25` points. The event team will reply in slack to confirm your updated team total score.

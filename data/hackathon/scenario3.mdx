@@ -18,10 +18,29 @@ For this task, your team are required to use the `granite-7b-lab` model availabl
 
 After locating the model in on premises object storage, your team need to replicate this model to the ACME Financial Services cloud cluster object storage so that it could be served in future.
 
+Documentation you may find helpful is:
+- https://min.io/docs/minio/linux/index.html
 
-## 3.2 - Install openshift ai
+
+
+## 3.2 - Install Openshift AI related operators
 
 Now that you've helped the ACME team replicate their chosen model to their cloud OpenShift Cluster, they want to serve the model ASAP.
 
 For this challenge your team must demonstrate to ACME how to install OpenShift AI, and serve the existing model called `granite-7b-lab` via OpenShift AI.
+
+Install the following opertors (do not install any custom resources)
+- OpenShift AI
+- OpenShift Service Mesh
+- OpenShift Serverless
+
+## 3.2 - Install Openshift AI
+
+        ingressGateway:
+          certificate:
+            secretName: knative-serving-cert
+
+
+Documentation you may find helpful is:
+- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html/installing_and_uninstalling_openshift_ai_self-managed/index
 
