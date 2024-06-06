@@ -49,6 +49,8 @@ huggingface-cli login --token "${HUGGINGFACE_TOKEN}"
 git clone https://huggingface.co/instructlab/granite-7b-lab
 #+end_src
 
+** TODO Create Minio Bucket `models`
+
 ** Upload model to on-prem cluster minio
 
 TODO Run aws configure and pull values out of that automatically.
