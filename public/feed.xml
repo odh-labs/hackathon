@@ -7,7 +7,7 @@
       <language>en-us</language>
       <managingEditor>jablair@redhat.com (Red Hat)</managingEditor>
       <webMaster>jablair@redhat.com (Red Hat)</webMaster>
-      <lastBuildDate>Sun, 14 Apr 2024 00:00:00 GMT</lastBuildDate>
+      <lastBuildDate>Wed, 05 Jun 2024 00:00:00 GMT</lastBuildDate>
       <atom:link href="https://odh-labs.github.io/workshop/feed.xml" rel="self" type="application/rss+xml"/>
       
   <item>
@@ -15,9 +15,19 @@
     <title>Understanding the hackathon environment</title>
     <link>https://odh-labs.github.io/workshop/workshop/scenario1</link>
     <description>Let&#39;s get underway with the hackathon.</description>
-    <pubDate>Sun, 14 Apr 2024 00:00:00 GMT</pubDate>
+    <pubDate>Wed, 05 Jun 2024 00:00:00 GMT</pubDate>
     <author>jablair@redhat.com (Red Hat)</author>
-    <category>openshift</category><category>virtualisation</category><category>kubernetes</category><category>kubevirt</category>
+    <category>openshift</category><category>ai</category><category>kubernetes</category>
+  </item>
+
+  <item>
+    <guid>https://odh-labs.github.io/workshop/workshop/scenario2</guid>
+    <title>Hybrid Cloud AI model deployment</title>
+    <link>https://odh-labs.github.io/workshop/workshop/scenario2</link>
+    <description>Let&#39;s deploy the first model across the hybrid cloud.</description>
+    <pubDate>Wed, 05 Jun 2024 00:00:00 GMT</pubDate>
+    <author>jablair@redhat.com (Red Hat)</author>
+    <category>openshift</category><category>ai</category><category>kubernetes</category>
   </item>
 
     </channel>
