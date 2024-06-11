@@ -34,13 +34,44 @@ Install the following opertors (do not install any custom resources)
 - OpenShift Service Mesh
 - OpenShift Serverless
 
-## 3.2 - Install Openshift AI
+## 3.2 - Install OpenShift AI
+Wait until the three operators specified in the previoius section have fully provisioned, before proceeding.
+You won't need any Custom Resources for OpenShift Service Mesh and OpenShift Serverless
 
+You will need one for OpenShift AI. A valid strategy would be to open the yaml view and go with all the defaults - the only addition to be to add this knative-serving-cert secret
         ingressGateway:
           certificate:
-            secretName: knative-serving-cert
+            `secretName: knative-serving-cert`
 
+
+
+## 3.3 - Use OpenShift AI to push Granite model from On Prem object storage to cloud
+
+Examine your On Prem object storage (Minio). The Granite model files inside the *models* bucket represent an LLM that may have been 
+- downloaded as is
+- downloaded and then fine tuned.
+As it's inside object storage, it's ready to push to cloud.
+
+Now open OpenShift AI and do the following
+- create a project
+- create a workbench that 
+  - uses Pytorch as a basis
+  - uses a Persistent Volume of at least 60GB 
+  - uses a Data Connection to your Minio object storage
+- for this task, use a 
+
+HINTS
+[1] Use this notebook to pull from local object storage and push to cloud object storage
+    https://github.com/tnscorcoran/rhods-finetunning-demo/blob/main/minio_pull_from_and_push_to.ipynb
+    TODO - Code the notebook and move it to the correct git repo
+    (note in a production environment, this would likely be automed using Gitops)
+    TODO - confirm Gitops would be used
 
 Documentation you may find helpful is:
 - https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html/installing_and_uninstalling_openshift_ai_self-managed/index
+
+- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html/getting_started_with_red_hat_openshift_ai_self-managed/creating-a-data-science-project_get-started
+
+- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html/getting_started_with_red_hat_openshift_ai_self-managed/creating-a-project-workbench_get-started
+
 
