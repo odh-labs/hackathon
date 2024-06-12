@@ -3,3 +3,4 @@ out
 .next
 .husky
 *.DS_Store
+.idea
