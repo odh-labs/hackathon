@@ -11,19 +11,7 @@ summary: "Let's deploy the first model across the hybrid cloud."
 As a sales team you've got an upcoming demo with the ACME Financial Services data science team, who have been training models on their laptops.
 The team have given you access to one of their models in the ACME Financial Services object storage and want to see how this could be deployed to a cluster running in the cloud.
 
-
-## 3.1 - Replicate Model to Cloud Storage
-
-For this task, your team are required to use the `granite-7b-lab` model available in the object storage running in the ACME Financial Services on prem cluster which is based on Minio.
-
-After locating the model in on premises object storage, your team need to replicate this model to the ACME Financial Services cloud cluster object storage so that it could be served in future.
-
-Documentation you may find helpful is:
-- https://min.io/docs/minio/linux/index.html
-
-
-
-## 3.2 - Install Openshift AI related operators
+## 3.1 - Install Openshift AI related operators
 
 Now that you've helped the ACME team replicate their chosen model to their cloud OpenShift Cluster, they want to serve the model ASAP.
 
@@ -33,6 +21,7 @@ Install the following opertors (do not install any custom resources)
 - OpenShift AI
 - OpenShift Service Mesh
 - OpenShift Serverless
+
 
 ## 3.2 - Install OpenShift AI
 Wait until the three operators specified in the previoius section have fully provisioned, before proceeding.
@@ -47,7 +36,21 @@ Documentation you may find helpful is:
 - https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html/installing_and_uninstalling_openshift_ai_self-managed/index
 
 
-## 3.3 - Use OpenShift AI to push Granite model from On Prem object storage to cloud
+
+## 3.3 - Replicate Model to Cloud Storage
+
+For this task, your team are required to use the `granite-7b-lab` model available in the object storage running in the ACME Financial Services on prem cluster which is based on Minio.
+
+After locating the model in on premises object storage, your team need to replicate this model to the ACME Financial Services cloud cluster object storage so that it could be served in future.
+
+Documentation you may find helpful is:
+- https://min.io/docs/minio/linux/index.html
+
+TODO: @James - I've reversed 3.1 and 3.3 as they may need my Jupyter Notebook 
+
+
+
+## 3.4.1 - Use OpenShift AI to push Granite model from On Prem object storage to cloud
 
 Examine your On Prem object storage (Minio). The Granite model files inside the *models* bucket represent an LLM that may have been 
 - downloaded as is
@@ -71,16 +74,29 @@ Documentation you may find helpful is:
 
 
 ## 3.4 - Use your cloud-based OpenShift AI to Serve the model and make it easily consumable by intelligent applications for inference
+Single Model Serving is the preferred mode for serving LLMs
 
 ### 3.4.1 - Import a VLLM Server and enable Single Model Serving
 VLLM is a popular model server format whose APIs are compatible with Open AI (Chat GPT) APIs. This format then lends itself to easy migration of apps already using Open AI - to OpenShift AI.
 
-Single Model Serving is the preferred mode for serving LLMs
-
 Documentation you may find helpful is:
 - https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html-single/serving_models/index#adding-a-custom-model-serving-runtime-for-the-single-model-serving-platform_serving-large-models
 
-- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html-single/serving_models/index#deploying-models-using-the-single-model-serving-platform_serving-large-models
+
+### 3.4.2 - Create a Single Model Server on your cloud based OpenShift
+
+Documentation you may find helpful is:
+- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html-single/serving_models/index#deploying-models-on-the-single-model-serving-platform_serving-large-models
+
+### 3.4.3 - Make an Inference call to the model.
+
+Note you should not need to use a token
+
+Documentation you may find helpful is:
+- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html-single/serving_models/index#accessing-inference-endpoint-for-deployed-model_serving-large-models
+
+
+
 
 HINTS
 [1] Use this notebook to pull from local object storage and push to cloud object storage
@@ -89,11 +105,15 @@ HINTS
     (note in a production environment, this would likely be automed using Gitops)
     TODO - confirm Gitops would be used
 
-[2] You can import this yaml to set up your vLLM server
+[3.4.1] You can import this yaml to set up your vLLM server
 
   TODO correct location
   https://github.com/tnscorcoran/hackathon/blob/main/temp/scenario3_hybrid_cloud/vllm-runtime-small-for-granite-7b.yaml
 
+[3.4.3] You can use this JSON as the API body to make an inference call
+
+  TODO correct location
+  https://github.com/tnscorcoran/hackathon/blob/main/temp/scenario3_hybrid_cloud/inference-api-body.json
 
 
 
