@@ -8,7 +8,7 @@ authors: ['default']
 summary: "Let's deploy the first model across the hybrid cloud."
 ---
 
-As a sales team you've got an upcoming demo with the Acme Financial Services data science team, who have been training models on their laptops.
+As a sales team you've got an upcoming demo with the ACME Financial Services data science team, who have been training models on their laptops.
 The team have given you access to one of their models in the ACME Financial Services object storage and want to see how this could be deployed to a cluster running in the cloud.
 
 
@@ -43,6 +43,8 @@ You will need one for OpenShift AI. A valid strategy would be to open the yaml v
           certificate:
             `secretName: knative-serving-cert`
 
+Documentation you may find helpful is:
+- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html/installing_and_uninstalling_openshift_ai_self-managed/index
 
 
 ## 3.3 - Use OpenShift AI to push Granite model from On Prem object storage to cloud
@@ -61,13 +63,24 @@ Now open OpenShift AI and do the following
   - uses a Medium sized Container without an accelerator
 - for this task, use a Jupyter notebook that pulls the contents of your source bucket to your target bucket on the cloud (Hint available below)
 
+Documentation you may find helpful is:
+
+- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html/getting_started_with_red_hat_openshift_ai_self-managed/creating-a-data-science-project_get-started
+
+- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html/getting_started_with_red_hat_openshift_ai_self-managed/creating-a-project-workbench_get-started
+
 
 ## 3.4 - Use your cloud-based OpenShift AI to Serve the model and make it easily consumable by intelligent applications for inference
 
-### 3.4.1 - Import a VLLM Server
+### 3.4.1 - Import a VLLM Server and enable Single Model Serving
 VLLM is a popular model server format whose APIs are compatible with Open AI (Chat GPT) APIs. This format then lends itself to easy migration of apps already using Open AI - to OpenShift AI.
 
+Single Model Serving is the preferred mode for serving LLMs
 
+Documentation you may find helpful is:
+- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html-single/serving_models/index#adding-a-custom-model-serving-runtime-for-the-single-model-serving-platform_serving-large-models
+
+- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html-single/serving_models/index#deploying-models-using-the-single-model-serving-platform_serving-large-models
 
 HINTS
 [1] Use this notebook to pull from local object storage and push to cloud object storage
@@ -76,11 +89,14 @@ HINTS
     (note in a production environment, this would likely be automed using Gitops)
     TODO - confirm Gitops would be used
 
-Documentation you may find helpful is:
-- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html/installing_and_uninstalling_openshift_ai_self-managed/index
+[2] You can import this yaml to set up your vLLM server
 
-- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html/getting_started_with_red_hat_openshift_ai_self-managed/creating-a-data-science-project_get-started
-
-- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html/getting_started_with_red_hat_openshift_ai_self-managed/creating-a-project-workbench_get-started
+  TODO correct location
+  https://github.com/tnscorcoran/hackathon/blob/main/temp/scenario3_hybrid_cloud/vllm-runtime-small-for-granite-7b.yaml
 
 
+
+
+
+
+- 
