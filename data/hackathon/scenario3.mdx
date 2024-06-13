@@ -87,6 +87,8 @@ Single Model Serving is the preferred mode for serving LLMs
 ### 3.6.1 - Import a VLLM Server and enable Single Model Serving
 VLLM is a popular model server format whose APIs are compatible with Open AI (Chat GPT) APIs. This format then lends itself to easy migration of apps already using Open AI - to OpenShift AI.
 
+You may use Hint 3.6.1 below
+
 Documentation you may find helpful is:
 - https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html-single/serving_models/index#adding-a-custom-model-serving-runtime-for-the-single-model-serving-platform_serving-large-models
 
@@ -98,7 +100,10 @@ Documentation you may find helpful is:
 
 ### 3.4.3 - Make an Inference call to the model.
 
-Note you should not need to use a token
+Note you should not need to use a token.
+
+You may use Hint 3.6.2 below
+
 
 Documentation you may find helpful is:
 - https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html-single/serving_models/index#accessing-inference-endpoint-for-deployed-model_serving-large-models
@@ -116,12 +121,12 @@ HINTS
     (note in a production environment, this would likely be automed using Gitops)
     TODO - confirm Gitops would be used
 
-[3.4.1] You can import this yaml to set up your vLLM server
+[3.6.1] You can import this yaml to set up your vLLM server
 
   TODO correct location
   https://github.com/tnscorcoran/hackathon/blob/main/temp/scenario3_hybrid_cloud/vllm-runtime-small-for-granite-7b.yaml
 
-[3.4.3] You can use this JSON as the API body to make an inference call
+[3.6.2] You can use this JSON as the API body to make an inference call
 
   TODO correct location
   https://github.com/tnscorcoran/hackathon/blob/main/temp/scenario3_hybrid_cloud/inference-api-body.json
