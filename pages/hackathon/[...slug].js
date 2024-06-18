@@ -40,7 +40,7 @@ export async function getStaticProps({ params }) {
   return { props: { post, authorDetails, prev, next } }
 }
 
-export default function Workshop({ post, authorDetails, prev, next }) {
+export default function Hackathon({ post, authorDetails, prev, next }) {
   const { mdxSource, toc, frontMatter } = post
 
   return (
