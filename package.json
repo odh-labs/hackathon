@@ -1,6 +1,6 @@
 {
-  "name": "workshops",
-  "version": "0.0.1",
+  "name": "hackathon",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "start": "next-remote-watch ./data",
@@ -12,7 +12,7 @@
     "analyze": "cross-env ANALYZE=true next build",
     "lint": "next lint --fix --dir pages --dir components --dir lib --dir layouts --dir scripts",
     "prepare": "husky install",
-    "spell": "cspell data/workshop/*"
+    "spell": "cspell data/hackathon/*"
   },
   "dependencies": {
     "@fontsource/inter": "4.5.2",
