@@ -4,7 +4,7 @@ const siteMetadata = {
   headerTitle: 'Red Hat',
   description: 'Red Hat OpenShift AI Hackathon',
   language: 'en-us',
-  siteUrl: 'https://odh-labs.github.io/workshop',
+  siteUrl: 'https://odh-labs.github.io/hackathon',
   siteRepo: 'https://github.com/odh-labs/hackathon',
   siteLogo: '/static/images/redhat.png',
   image: '/static/images/avatar.png',
