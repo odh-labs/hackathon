@@ -16,7 +16,7 @@ export async function getStaticProps() {
   return { props: { initialDisplayPosts, posts, pagination } }
 }
 
-export default function Workshop({ posts, initialDisplayPosts, pagination }) {
+export default function Hackathon({ posts, initialDisplayPosts, pagination }) {
   return (
     <>
       <PageSEO title={`${siteMetadata.description}`}/>
