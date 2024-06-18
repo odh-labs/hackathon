@@ -5,7 +5,7 @@ import ListLayout from '@/layouts/ListLayout'
 import { POSTS_PER_PAGE } from '..'
 
 export async function getStaticPaths() {
-  const totalPosts = await getAllFilesFrontMatter('workshop')
+  const totalPosts = await getAllFilesFrontMatter('hackathon')
   const totalPages = Math.ceil(totalPosts.length / POSTS_PER_PAGE)
   const paths = Array.from({ length: totalPages }, (_, i) => ({
     params: { page: (i + 1).toString() },
@@ -21,7 +21,7 @@ export async function getStaticProps(context) {
   const {
     params: { page },
   } = context
-  const posts = await getAllFilesFrontMatter('workshop')
+  const posts = await getAllFilesFrontMatter('hackathon')
   const pageNumber = parseInt(page)
   const initialDisplayPosts = posts.slice(
     POSTS_PER_PAGE * (pageNumber - 1),
@@ -49,7 +49,7 @@ export default function PostPage({ posts, initialDisplayPosts, pagination }) {
         posts={posts}
         initialDisplayPosts={initialDisplayPosts}
         pagination={pagination}
-        title="All workshops"
+        title="All exercises"
       />
     </>
   )

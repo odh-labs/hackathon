@@ -6,7 +6,7 @@ import { PageSEO } from '@/components/SEO'
 export const POSTS_PER_PAGE = 10
 
 export async function getStaticProps() {
-  const posts = await getAllFilesFrontMatter('workshop')
+  const posts = await getAllFilesFrontMatter('hackathon')
   const initialDisplayPosts = posts.slice(0, POSTS_PER_PAGE)
   const pagination = {
     currentPage: 1,
@@ -16,7 +16,7 @@ export async function getStaticProps() {
   return { props: { initialDisplayPosts, posts, pagination } }
 }
 
-export default function Workshop({ posts, initialDisplayPosts, pagination }) {
+export default function Hackathon({ posts, initialDisplayPosts, pagination }) {
   return (
     <>
       <PageSEO title={`${siteMetadata.description}`}/>
