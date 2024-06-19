@@ -8,10 +8,28 @@ authors: ['default']
 summary: "Let's add some tooling in satndardised way available to all data science users"
 ---
 
-As a sales team you've got an upcoming demo with the Acme Financial Services data science team, who have been training models on their laptops.
-Their data scientists are given directives on what tools to use - but in reality, what each one uses has drifted away from what's been directed, resulting in inconsistencies in tooling used across users and more importantly between deveopment and production environments
-You are required to show a solution for this problem on OpenShift AI.
+The ACME Financial Services team are underway with the OpenShift AI Proof of Concept and are now stuck with a workbench problem.
+The ACME has been using the `Standard Data Science` workbench image with Python 3.9 and are now trying to enable additional libraries for their entire team.
+While experimenting they were completing this with a `pip install` insde their Jupyter Notebooks. They now need these libraries to be baiked into their workbench images, so they can standardise on tooling across the team.
 
-## 4.1 - Test a new library inside a Jupyter Notebook
+As the pre-sales team, you've offered to show how this is done.
 
-For this task, your team are required to 
+
+## 4.1 - Review notebook requiring custom Python library with in an existing workbench
+Fire up an OpenShift AI workbench, using the `Standard Data Science` base image and launch/run the Notebook https://github.com/odh-labs/hackathon/blob/main/temp/scenario4_open_innovation/custom-image.ipynb
+You see it fails due to missing mibrary pypdf
+
+
+## 4.2 - Build custom workbench image
+Your first task after reviewing the failing scenario to build a custom image and deploy it as am Image Stream into the cluster (it should go in the redhat-ods-applications)
+
+Documentation you may find helpful is:
+- https://github.com/red-hat-data-services/notebooks
+- https://docs.openshift.com/container-platform/4.15/cicd/builds/understanding-buildconfigs.html
+- https://docs.openshift.com/container-platform/4.15/openshift_images/image-streams-manage.html
+
+
+
+
+HINTS
+[4.2] SOlution to 
