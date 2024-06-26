@@ -5,7 +5,7 @@ date: '2024-06-25'
 tags: ['openshift','ai','kubernetes', 'rhel ai','instruct lab']
 draft: false
 authors: ['default']
-summary: "Let's show how Red Hat will enable non-data-science users to `instruction-tune` AI models, using some simple RHEL-AI and Instruct Lab tooling"
+summary: "Demonstrate how Red Hat enables non-data-science users to `instruction-tune` AI models, using some simple RHEL-AI and Instruct Lab tooling"
 ---
 
 The ACME Financial Services team is on the GenAI hype train and gaining mommentum. They did a lot of experimentation, finetuning, RAG, prompt engineering, but they just found that the hallucinations increased the more finetuning they do, and even the most well engineered prompts would not be a 100% guarantee of the GenAI model not hallucinating.
@@ -21,13 +21,16 @@ Your challenge is to
 7) Verify that the new knowledge is present
 
 ## 6.0 - Be in the Know...
+- You might want to consider that the synthetic data generation will take approx 15min and the model training approx 20min.
+
 Documentation you may find helpful is:
 - https://github.com/instructlab/instructlab
 - https://shonpaz.medium.com/rewiring-the-way-we-think-on-ai-part-1-model-fine-tuning-using-instructlab-ebba7017e5d5
-- In case you want to build your RHEL AI image yourself later: https://github.com/RedHatOfficial/rhelai-dev-preview
+- In case you want to build your RHEL AI image yourself later - still dev preview: https://github.com/RedHatOfficial/rhelai-dev-preview
 
 ## 6.1 - Setting Up
 - Go to demo.redhat.com and order your teams' InstructLab RHEL VM (Nvidia/CUDA) environment
+- Use the virtual python environment if you want GPU acceleration
 - Install the instruct lab command line tooling
 - Serve the Model
 
@@ -36,23 +39,25 @@ Documentation you may find helpful is:
 If you find the answers somewhat peculiar, your mission is to fix that - should you accept it. And no, this message will not self-destruct. Should you be happy with the answer you can select a different knowledge area to improve.
 
 ## 6.3 - Add new knowledge
-- Acquire the InstructLab taxonomy 
+- Utilise the existing InstructLab taxonomy on your image
 - Add new knowledge. 
-- Verify that the taxonomy tree is A-OK.
+- Optional: Verify that the taxonomy tree is A-OK.
 
 ## 6.4 - Generate syntheic data
 - Generate new synthetic data with a teacher model 
-- Does synthetic data generation need a model being served? Why/Why not?
+- Discuss: Does synthetic data generation need a model being served? Why/Why not?
 
 ## 6.5 - Verify expected outcomes
 - Verify the synthetic data generation via the critic model output
 - Discuss: Does the critic model _need_ to be a different model compared to the student or teacher model?
 - Create a screenshot showing the files generated via the generate phase and the discarded data from the critic model and post it into the slack channel.
 
+(not so) Fun Fact: The upstream version of ilab doesn't actually use a critic model at the moment, it just checks for format errors. RHEL AI will use a critic model.
+
 ## 6.6 - Train the student model
 - Does training require a model being served? Why or Why not?
-- Train the model
-- When would you / should you use quantisation?
+- Decide if you want hardware acceleration, let iLab know, then train the model
+- Discuss: When would you / should you use quantisation?
 
 ## 6.7 - Chat & verify newly added knowledge
 - Chat with the newly trained model and verify if it has the additional knowledge you added.
@@ -60,5 +65,5 @@ If you find the answers somewhat peculiar, your mission is to fix that - should 
 
 
 # HINTS
-- [6.1]: If you get stuck, have a close look at: https://shonpaz.medium.com/rewiring-the-way-we-think-on-ai-part-1-model-fine-tuning-using-instructlab-ebba7017e5d5
+- [6.1]: If you get stuck, have a closer look at: https://shonpaz.medium.com/rewiring-the-way-we-think-on-ai-part-1-model-fine-tuning-using-instructlab-ebba7017e5d5
 
