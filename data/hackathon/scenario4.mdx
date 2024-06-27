@@ -1,0 +1,71 @@
+---
+title: Open Innovation - Integrating a new piece of tooling into OpenShift AI Workspace
+exercise: 3
+date: '2024-06-05'
+tags: ['openshift','ai','kubernetes']
+draft: false
+authors: ['default']
+summary: "Let's add some tooling in satndardised way available to all data science users"
+---
+
+The ACME Financial Services team are underway with the OpenShift AI Proof of Concept and are now stuck with a workbench problem.
+The ACME has been using the `Standard Data Science` workbench image with Python 3.9 and are now trying to enable additional libraries for their entire team.
+While experimenting they were completing this with a `pip install` insde their Jupyter Notebooks. They now need these libraries to be baiked into their workbench images, so they can standardise on tooling across the team.
+
+As the pre-sales team, you've offered to show how this is done.
+
+
+## 4.1 - Review notebook requiring custom Python library with in an existing workbench
+Fire up an OpenShift AI workbench, using the `Standard Data Science` base image and launch/run the Notebook https://github.com/odh-labs/hackathon/blob/main/temp/scenario4_open_innovation/custom-image.ipynb
+You see it fails due to missing library pypdf
+
+
+## 4.2 - Build custom workbench image
+Your first task after reviewing the failing scenario to build a custom workbench image on the ACME Financial Services On Premises cluster via a `BuildConfig`.  
+
+You have 2 options 
+1) Use a Build Config and push the image as an Image Stream into the  redhat-ods-applications  namespace
+2) Use Podman to build a container locally and push to Internal OpenShift Container Registry
+
+Your custom image name should be `acme-workbench-ai-custom`
+
+Documentation you may find helpful is:
+- https://github.com/red-hat-data-services/notebooks
+- https://docs.openshift.com/container-platform/4.15/cicd/builds/understanding-buildconfigs.html
+- https://github.com/opendatahub-io-contrib/workbench-images
+
+
+## 4.3 - Ensure Image is present in the Internal OpenShift Container Registry
+After building an image, you'll need to ensure the image is present in the Internal OpenShift Container Registry.
+
+Documentation you may find helpful is:
+- https://docs.openshift.com/container-platform/4.15/registry/index.html
+- https://docs.openshift.com/container-platform/4.15/openshift_images/image-streams-manage.html
+
+TODO Add screenshots
+
+## 4.4 - Verify image is imported into OpenShift AI
+Your newly imported image should be visible in the `Image selection` dropdown within the Workbench tab inside your OpenShift AI 
+
+TODO Add screenshots
+
+## 4.5 - Check your work
+If your ACME Financial Services custom image  `acme-workbench-ai-custom` is available in the dropdown, please post a screenshot of it to  #event-anz-ai-hackathon with the message:
+
+Please review [team name] solution for exercise 4.
+
+This exercise is worth 25 points. The event team will reply in slack to confirm your updated team total score.
+
+
+TODO PULL all Check your work sections from https://github.com/jmhbnz/workshops/blob/main/data/workshop/scenario1.mdx
+
+
+# HINTS
+[4.2.1] TODO - move the contents of this repo to the final github location:
+Solution via Helm Chart is available here: https://github.com/butler54/rhoai-custom-image
+
+            TODO - MOVE TO DOCS:
+            oc project redhat-ods-applications
+            helm install myimage ./helm
+
+

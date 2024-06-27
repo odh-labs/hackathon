@@ -2,18 +2,18 @@
   <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
       <title>Red Hat OpenShift AI Hackathon</title>
-      <link>https://odh-labs.github.io/workshop/workshop</link>
+      <link>https://odh-labs.github.io/hackathon/hackathon</link>
       <description>Red Hat OpenShift AI Hackathon</description>
       <language>en-us</language>
       <managingEditor>jablair@redhat.com (Red Hat)</managingEditor>
       <webMaster>jablair@redhat.com (Red Hat)</webMaster>
       <lastBuildDate>Wed, 05 Jun 2024 00:00:00 GMT</lastBuildDate>
-      <atom:link href="https://odh-labs.github.io/workshop/feed.xml" rel="self" type="application/rss+xml"/>
+      <atom:link href="https://odh-labs.github.io/hackathon/feed.xml" rel="self" type="application/rss+xml"/>
       
   <item>
-    <guid>https://odh-labs.github.io/workshop/workshop/scenario1</guid>
+    <guid>https://odh-labs.github.io/hackathon/hackathon/scenario1</guid>
     <title>Understanding the hackathon environment</title>
-    <link>https://odh-labs.github.io/workshop/workshop/scenario1</link>
+    <link>https://odh-labs.github.io/hackathon/hackathon/scenario1</link>
     <description>Let&#39;s get underway with the hackathon.</description>
     <pubDate>Wed, 05 Jun 2024 00:00:00 GMT</pubDate>
     <author>jablair@redhat.com (Red Hat)</author>
@@ -21,11 +21,21 @@
   </item>
 
   <item>
-    <guid>https://odh-labs.github.io/workshop/workshop/scenario2</guid>
+    <guid>https://odh-labs.github.io/hackathon/hackathon/scenario3</guid>
     <title>Hybrid Cloud AI model deployment</title>
-    <link>https://odh-labs.github.io/workshop/workshop/scenario2</link>
+    <link>https://odh-labs.github.io/hackathon/hackathon/scenario3</link>
     <description>Let&#39;s deploy the first model across the hybrid cloud.</description>
     <pubDate>Wed, 05 Jun 2024 00:00:00 GMT</pubDate>
+    <author>jablair@redhat.com (Red Hat)</author>
+    <category>openshift</category><category>ai</category><category>kubernetes</category>
+  </item>
+
+  <item>
+    <guid>https://odh-labs.github.io/hackathon/hackathon/scenario2</guid>
+    <title>Enabling GPU accelerators</title>
+    <link>https://odh-labs.github.io/hackathon/hackathon/scenario2</link>
+    <description>How do we use GPU accelerators??</description>
+    <pubDate>Thu, 06 Jun 2024 00:00:00 GMT</pubDate>
     <author>jablair@redhat.com (Red Hat)</author>
     <category>openshift</category><category>ai</category><category>kubernetes</category>
   </item>

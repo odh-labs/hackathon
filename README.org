@@ -10,16 +10,16 @@ Below are the instructions for manually setting up an environment to run the hac
 
 ** Cloud cluster
 
-Each team will require an AWS ROSA cluster, which we will provision via the [[https://demo.redhat.com/catalog?item=babylon-catalog-prod/sandboxes-gpte.rosa.prod&utm_source=webapp&utm_medium=share-link][Red Hat Demo System]]. When requesting the environments we enable the workshop user interface.
+Each team participating in the hackathon will require a [[https://aws.amazon.com/rosa][Red Hat OpenShift on AWS (ROSA)]] cluster, which we will provision via the [[https://demo.redhat.com/catalog?item=babylon-catalog-prod/sandboxes-gpte.rosa.prod&utm_source=webapp&utm_medium=share-link][Red Hat Demo System]]. When requesting the environments we enable the workshop user interface.
 
 ** On-premises cluster
 
-Each team will require a Single Node OpenShift cluster, representing their teams on premises environment which we will provision via the [[https://demo.redhat.com/catalog?item=babylon-catalog-prod/openshift-cnv.ocpmulti-single-node-cnv.prod&utm_source=webapp&utm_medium=share-link][Red Hat Demo System]]. When requesting the environments we enable the workshop user interface.
+Each team will also require a Single Node OpenShift cluster, representing their teams on premises environment which we will provision via the [[https://demo.redhat.com/catalog?item=babylon-catalog-prod/openshift-cnv.ocpmulti-single-node-cnv.prod&utm_source=webapp&utm_medium=share-link][Red Hat Demo System]]. When requesting the environments we enable the workshop user interface.
 
 
 * Cluster setup - on-premises
 
-For each cluster provisioned for the hackathon, the following steps need to be performed:
+For each on-premises cluster provisioned for the hackathon, the following steps need to be performed:
 
 
 ** Log in to cluster
@@ -35,7 +35,7 @@ oc new-project minio
 
 oc apply -f setup/minio-setup.yaml
 
-oc rollout status minio --watch
+oc rollout status deployment/minio --watch
 #+end_src
 
 ** TODO Consider creating a cluster web terminal pod

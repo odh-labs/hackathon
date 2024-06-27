@@ -8,10 +8,10 @@ import siteMetadata from '@/data/siteMetadata'
 import Comments from '@/components/comments'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 
-const editUrl = (fileName) => `${siteMetadata.siteRepo}/blob/master/data/workshop/${fileName}`
+const editUrl = (fileName) => `${siteMetadata.siteRepo}/blob/master/data/hackathon/${fileName}`
 const discussUrl = (slug) =>
   `https://mobile.twitter.com/search?q=${encodeURIComponent(
-    `${siteMetadata.siteUrl}/workshop/${slug}`
+    `${siteMetadata.siteUrl}/hackathon/${slug}`
   )}`
 
 const postDateTemplate = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }
@@ -22,7 +22,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
   return (
     <SectionContainer>
       <BlogSEO
-        url={`${siteMetadata.siteUrl}/workshop/${slug}`}
+        url={`${siteMetadata.siteUrl}/hackathon/${slug}`}
         authorDetails={authorDetails}
         {...frontMatter}
       />
@@ -96,7 +96,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
                           Previous Exercise
                         </h2>
                         <div className="text-primary-800 hover:text-primary-900 dark:hover:text-primary-400">
-                          <Link href={`/workshop/${prev.slug}`}>{prev.title}</Link>
+                          <Link href={`/hackathon/${prev.slug}`}>{prev.title}</Link>
                         </div>
                       </div>
                     )}
@@ -106,7 +106,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
                           Next Exercise
                         </h2>
                         <div className="text-primary-800 hover:text-primary-900 dark:hover:text-primary-400">
-                          <Link href={`/workshop/${next.slug}`}>{next.title}</Link>
+                          <Link href={`/hackathon/${next.slug}`}>{next.title}</Link>
                         </div>
                       </div>
                     )}
@@ -115,7 +115,7 @@ export default function PostLayout({ frontMatter, authorDetails, next, prev, chi
               </div>
               <div className="pt-4 xl:pt-8">
                 <Link
-                  href="/workshop"
+                  href="/hackathon"
                   className="text-primary-800 hover:text-primary-900 dark:hover:text-primary-400"
                 >
                   &larr; Back to the exercise list
