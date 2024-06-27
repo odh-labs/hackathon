@@ -66,6 +66,16 @@ Solution via Helm Chart is available here: https://github.com/butler54/rhoai-cus
 
             TODO - MOVE TO DOCS:
             oc project redhat-ods-applications
-            helm install myimage ./helm
+
+            install the helm chart in the namespace redhat-ods-applications
+            helm install rhoai-custom-image ./helm
+
+            check the image is present
+            oc get imageStream -n redhat-ods-applications
+
+            check the image path in the registry
+            oc get imageStream -n redhat-ods-applications my-custom-image-stream -o yaml
+
+            if the image doesn't appear, import the image manually
 
 
