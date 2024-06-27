@@ -1,21 +1,70 @@
----
-title: Empower Developers and Business users to tune Large Language Models 
+
+title: Empower organisations to encode their knowledge into purpose built Large Language Models 
 exercise: 6
 date: '2024-06-25'
-tags: ['openshift','ai','kubernetes']
+tags: ['openshift','ai','kubernetes', 'rhel ai','instruct lab']
 draft: false
 authors: ['default']
-summary: "Let's show Red Hat will enable non-data-science users to `instruction-tune` AI models, using some simple RHEL-AI and Instruct Lab tooling"
+summary: "Demonstrate how Red Hat enables non-data-science users to `instruction-tune` AI models, using some simple RHEL-AI and Instruct Lab tooling"
 ---
 
-The ACME Financial Services team have a large development team, but have struggled to recruit experienced data scientists to
-You challenge is to 
+The ACME Financial Services team is on the GenAI hype train and gaining mommentum. They did a lot of experimentation, finetuning, RAG, prompt engineering, but they just found that the hallucinations increased the more finetuning they do, and even the most well engineered prompts would not be a 100% guarantee of the GenAI model not hallucinating.
+So the announcement of Instruct LAB is pretty much what they've been looking for.
 
-## 5.1 - 
+Your challenge is to 
+1) Setup the InstructLab environment
+2) Chat with the model (student model) and see what it knows about itself (InstructLab)
+3) Add new knowledge 
+4) Generate synthetic data (via a teacher model) - this will take approx 15 minutes
+5) Verify the synthetic data generation via the critic model output
+6) Train the student model to integrate the new knowledge - this will take approx 20 minutes
+7) Verify that the new knowledge is present
+
+## 6.0 - Be in the Know...
+- You might want to consider that the synthetic data generation will take approx 15min and the model training approx 20min.
+
 Documentation you may find helpful is:
-- https://docs.redhat.com/en/documentation/openshift_container_platform/4.15/html/building_applications/creating-applications#odc-deploying-container-image_odc-creating-applications-using-developer-perspective
-- https://docs.openshift.com/container-platform/3.11/dev_guide/environment_variables.html
+- https://github.com/instructlab/instructlab
+- https://shonpaz.medium.com/rewiring-the-way-we-think-on-ai-part-1-model-fine-tuning-using-instructlab-ebba7017e5d5
+- In case you want to build your RHEL AI image yourself later - still dev preview: https://github.com/RedHatOfficial/rhelai-dev-preview
+
+## 6.1 - Setting Up
+- Go to demo.redhat.com and order your teams' InstructLab RHEL VM (Nvidia/CUDA) environment
+- Use the virtual python environment if you want GPU acceleration
+- Install the instruct lab command line tooling
+- Serve the Model
+
+## 6.2 - Chat and test knowledge
+- Chat with the model and test its knowledge about Instruct Lab 
+If you find the answers somewhat peculiar, your mission is to fix that - should you accept it. And no, this message will not self-destruct. Should you be happy with the answer you can select a different knowledge area to improve.
+
+## 6.3 - Add new knowledge
+- Utilise the existing InstructLab taxonomy on your image
+- Add new knowledge. 
+- Optional: Verify that the taxonomy tree is A-OK.
+
+## 6.4 - Generate syntheic data
+- Generate new synthetic data with a teacher model 
+- Discuss: Does synthetic data generation need a model being served? Why/Why not?
+
+## 6.5 - Verify expected outcomes
+- Verify the synthetic data generation via the critic model output
+- Discuss: Does the critic model _need_ to be a different model compared to the student or teacher model?
+- Create a screenshot showing the files generated via the generate phase and the discarded data from the critic model and post it into the slack channel.
+
+(not so) Fun Fact: The upstream version of ilab doesn't actually use a critic model at the moment, it just checks for format errors. RHEL AI will use a critic model.
+
+## 6.6 - Train the student model
+- Does training require a model being served? Why or Why not?
+- Decide if you want hardware acceleration, let iLab know, then train the model
+- Discuss: When would you / should you use quantisation?
+
+## 6.7 - Chat & verify newly added knowledge
+- Chat with the newly trained model and verify if it has the additional knowledge you added.
+- Create a screenshot and post it in the slack channel.
+
 
 # HINTS
-- [5.1.2]: The actual web app yaml (already with the configuration to talk to the model server) is available here: https://raw.githubusercontent.com/rh-aiservices-bu/mad_m6_workshop/main/deployment/intelligent_application_deployment.yaml
+- [6.1]: If you get stuck, have a closer look at: https://shonpaz.medium.com/rewiring-the-way-we-think-on-ai-part-1-model-fine-tuning-using-instructlab-ebba7017e5d5
+
 
