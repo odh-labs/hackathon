@@ -39,7 +39,7 @@ You won't need any Custom Resources for OpenShift Service Mesh and OpenShift Ser
 You will need one for OpenShift AI. A valid strategy would be to open the yaml view and go with all the defaults - the only addition to be to add this knative-serving-cert secret
         ingressGateway:
           certificate:
-            `secretName: knative-serving-cert`
+            secretName: knative-serving-cert
 
 Documentation you may find helpful is:
 - https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html/installing_and_uninstalling_openshift_ai_self-managed/index
@@ -110,6 +110,17 @@ Documentation you may find helpful is:
 
 
 
+## 1.5 - Hints!
+The first hint is free: In scenario 6, you will need to provision 15 minutes time for synthetic data generation as well as 20 minutes for model training. You might want to make this part of your strategy to win.
+
+If you get stuck on a question, fear not, perhaps try a different approach. If you have tried everything you can think of and are still stuck you can unlock a hint for `5` points by posting a message in the `#event-anz-ocp-ai-hackathon` channel with the message:
+
+> [team name] are stuck on [exercise] and are unlocking a hint.
+
+A hackathon organiser will join your breakout room to share the hint with you 🤫.
+
+
+TODO Tom - move this to Google Docs
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
