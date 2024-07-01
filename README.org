@@ -6,11 +6,26 @@ This repository contains a basic [[https://nextjs.org/][nextjs]] frontend design
 
 Below are the instructions for manually setting up an environment to run the hackathon.
 
+
+* Pre-requisites
+
+This guide assumes you have the following packages installed locally:
+- [[https://formulae.brew.sh/formula/openshift-cli][OpenShift client]] `oc`
+- [[https://formulae.brew.sh/formula/rosa-cli][Red Hat OpenShift Service on AWS client]] `rosa`
+- [[https://formulae.brew.sh/formula/awscli][Amazon Web Services client]] `aws`
+
+#+NAME: Check pre-requisites
+#+begin_src tmux
+oc version && rosa version && aws --version
+#+end_src
+
+
 * Cluster provisioning
 
 Each team participating in the hackathon will require a [[https://aws.amazon.com/rosa][Red Hat OpenShift on AWS (ROSA)]] cluster, which we will provision via the [[https://demo.redhat.com/catalog?item=babylon-catalog-prod/sandboxes-gpte.rosa.prod&utm_source=webapp&utm_medium=share-link][Red Hat Demo System]]. When requesting the environments we enable the workshop user interface with:
 - The title `OpenShift AI Hackathon`
 - Number of instances set to `12`
+- AWS Region `eu-west-1`
 
 
 * Cluster setup
@@ -18,20 +33,29 @@ Each team participating in the hackathon will require a [[https://aws.amazon.com
 For each cluster provisioned for the hackathon, the following steps need to be performed:
 
 
-** Log in to cluster
+** Log in to cluster and rosa cli
 
+Before we begin lets ensure our command line tools are authenticated. For `rosa` you'll need a token from the [[https://console.redhat.com/openshift/create/rosa/getstarted][Rosa Console]].
+
+#+NAME: Authenticate cli tools
 #+begin_src tmux
-oc login --web <api-route>
+oc login --username "cluster-admin" --password "${PASSWORD}" <api-route>
+
+rosa login --token "${ROSA_TOKEN}"
+
+aws configure
 #+end_src
+
 
 ** Create gpu machine pool
 
 Our first task is to ensure each cluster has a GPU `MachineSet` present, we can follow the instructions from https://cloud.redhat.com/experts/rosa/gpu to complete this.
 
+#+NAME: Create machine pool
 #+begin_src tmux
 # Define paramaters for machineset
 export GPU_INSTANCE_TYPE='g5.8xlarge'
-export CLUSTER_NAME=<cluster-name>
+export CLUSTER_NAME=rosa-jfccs
 export MACHINE_POOL_NAME=nvidia-gpu-pool
 export MACHINE_POOL_REPLICA_COUNT=1
 
@@ -50,21 +74,27 @@ oc wait --for=jsonpath='{.status.readyReplicas}'=1 machineset \
 #+end_src
 
 
-** Install minio via oc
+** Install and configure minio via oc
 
+Once the cluster gpu machinepool has been created we need to deploy [[https://min.io/][minio]] so we can create storage buckets and pre seed models on the cluster for hackathon participants to consume.
+
+#+NAME: Install minio via oc
 #+begin_src tmux
-oc new-project minio
+# Deploy minio
+oc new-project minio && oc --namespace minio apply -f setup/minio-setup.yaml
 
-oc apply -f setup/minio-setup.yaml
-
-oc rollout status deployment/minio --watch
-
-
+# Wait for minio to come up
+oc --namespace minio rollout status deployment/minio --watch
 #+end_src
 
-** TODO Consider creating a cluster web terminal pod
 
-** TODO Create Minio Bucket `models`
+With minio deployed we need to create a bucket and upload some content to it.
+
+#+NAME: Configure minio via oc
+#+begin_src tmux
+oc get pods -n minio
+#+end_src
+
 
 ** Download model from huggingface into each `on prem` clusters Minio `model`'s bucket
 
