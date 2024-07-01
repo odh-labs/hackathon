@@ -16,7 +16,7 @@ The team have given you access to one of their models in the ACME Financial Serv
 For this task, your team are required to use the `granite-7b-lab` model available in the object storage running in the ACME Financial Services on prem cluster which is based on Minio.
 
 The `granite-7b-lab` model is available in the object storage running in the ACME Financial Services on prem cluster which is based on Minio. It's located under the `models` bucket.
-After locating the model in on premises object storage, your team will need to replicate this model to the ACME Financial Services cloud cluster object storage (to a bucket and sub-folder under the same name) so that it could be served in future.
+After locating the model in on premises object storage, your team already replicated this model to the ACME Financial Services cloud cluster object storage (to a bucket and sub-folder under the same name) so that it could be served in future.
 
 Examine both storage locations.
 
@@ -37,12 +37,22 @@ Wait until the three operators specified in the previoius section have fully pro
 You won't need any Custom Resources for OpenShift Service Mesh and OpenShift Serverless
 
 You will need one for OpenShift AI. A valid strategy would be to open the yaml view and go with all the defaults - the only addition to be to add this knative-serving-cert secret
-        ingressGateway:
-          certificate:
-            secretName: knative-serving-cert
+```
+spec:
+ components:
+   kserve:
+     managementState: Managed
+     serving:
+       ingressGateway:
+         certificate:
+           secretName: knative-serving-cert
+           type: SelfSigned
+       managementState: Managed
+       name: knative-serving
+```
 
 Documentation you may find helpful is:
-- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html/installing_and_uninstalling_openshift_ai_self-managed/index
+- https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2-latest/html/serving_models/serving-large-models_serving-large-models#configuring-automated-installation-of-kserve_serving-large-models
 
 
 
@@ -55,6 +65,7 @@ Now open OpenShift AI and do the following
 - create a project
 - create a workbench that 
   - uses Pytorch as a basis
+  - uses a Large container size
   - uses a Persistent Volume of at least 100GB 
   - uses a Data Connection to your Minio object storage
   - uses a Medium sized Container without an accelerator
@@ -62,88 +73,40 @@ Now open OpenShift AI and do the following
 
 Documentation you may find helpful is:
 
-- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html/getting_started_with_red_hat_openshift_ai_self-managed/creating-a-data-science-project_get-started
+- https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html/getting_started_with_red_hat_openshift_ai_self-managed/creating-a-data-science-project_get-started
 
-- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html/getting_started_with_red_hat_openshift_ai_self-managed/creating-a-project-workbench_get-started
-
-
-
-
-## 3.5 - Replicate Model to Cloud Storage
-
-For this task, your team are required to use the `granite-7b-lab` model available in the object storage running in the ACME Financial Services on prem cluster which is based on Minio.
-
-How you do this replication is up to you. There are options using the Minio CLI and also using hint 3.5 below.
-
-Documentation you may find helpful is:
-- https://min.io/docs/minio/linux/index.html
+- https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html/getting_started_with_red_hat_openshift_ai_self-managed/creating-a-workbench-select-ide_get-started
 
 
 
 
-## 3.6 - Use your cloud-based OpenShift AI to Serve the model and make it easily consumable by intelligent applications for inference
+
+## 3.5 - Use your cloud-based OpenShift AI to Serve the model and make it easily consumable by intelligent applications for inference
 Single Model Serving is the preferred mode for serving LLMs
 
-### 3.6.1 - Import a VLLM Server and enable Single Model Serving
+
+### 3.5.1 - Single Model Serving
 VLLM is a popular model server format whose APIs are compatible with Open AI (Chat GPT) APIs. This format then lends itself to easy migration of apps already using Open AI - to OpenShift AI.
 
-You may use Hint 3.6.1 below
+Add a vLLM model server that uses a Data Connection that to your cloud cluster's Minio and the subfolder of its `models` bucket that contains your Granite model
+Documentation you may find helpful is:
+- https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html-single/serving_models/index#enabling-the-single-model-serving-platform_serving-large-models
+
+
+### 3.5.2 - Make an inference call to your model
+
+After perhaps 5 mins, your model server should be ready - with an Inference URL
+
+You challenge is to make an inference API call. 
+
+Free hint: the Fast API (Swagger) interface is a fast and effective way to do this
+
+Free hint: no Authorisation or credentials should be necessary
+
+2 more hints are available from the moderators
+- Hint 3.5.2.1 - Fast API Inference URL
+- Hint 3.5.2.2 - Specific Inference API endpoint and payload
 
 Documentation you may find helpful is:
-- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html-single/serving_models/index#adding-a-custom-model-serving-runtime-for-the-single-model-serving-platform_serving-large-models
+- https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html-single/serving_models/index#making-inference-requests-to-models-deployed-on-single-model-serving-platform_serving-large-models
 
-
-### 3.6.2 - Create a Single Model Server on your cloud based OpenShift
-
-Documentation you may find helpful is:
-- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html-single/serving_models/index#deploying-models-on-the-single-model-serving-platform_serving-large-models
-
-### 3.4.3 - Make an Inference call to the model.
-
-Note you should not need to use a token.
-
-You may use Hint 3.6.2 below
-
-
-Documentation you may find helpful is:
-- https://access.redhat.com/documentation/en-us/red_hat_openshift_ai_self-managed/2.9/html-single/serving_models/index#accessing-inference-endpoint-for-deployed-model_serving-large-models
-
-
-
-## 1.5 - Hints!
-The first hint is free: In scenario 6, you will need to provision 15 minutes time for synthetic data generation as well as 20 minutes for model training. You might want to make this part of your strategy to win.
-
-If you get stuck on a question, fear not, perhaps try a different approach. If you have tried everything you can think of and are still stuck you can unlock a hint for `5` points by posting a message in the `#event-anz-ocp-ai-hackathon` channel with the message:
-
-> [team name] are stuck on [exercise] and are unlocking a hint.
-
-A hackathon organiser will join your breakout room to share the hint with you 🤫.
-
-
-TODO Tom - move this to Google Docs
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-HINTS
-[3.5] You can use this notebook to pull from local object storage and push to cloud object storage
-    https://github.com/tnscorcoran/rhods-finetunning-demo/blob/main/minio_pull_from_and_push_to.ipynb
-    TODO - Code the notebook and move it to the correct git repo
-    (note in a production environment, this would likely be automed using Gitops)
-    TODO - confirm Gitops would be used
-
-[3.6.1] You can import this yaml to set up your vLLM server
-
-  TODO correct location
-  https://github.com/tnscorcoran/hackathon/blob/main/temp/scenario3_hybrid_cloud/vllm-runtime-small-for-granite-7b.yaml
-
-[3.6.2] You can use this JSON as the API body to make an inference call
-
-  TODO correct location
-  https://github.com/tnscorcoran/hackathon/blob/main/temp/scenario3_hybrid_cloud/inference-api-body.json
-
-
-
-
-
-- 
