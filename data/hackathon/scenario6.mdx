@@ -8,7 +8,7 @@ authors: ['default']
 summary: "Demonstrate how Red Hat enables non-data-science users to `instruction-tune` AI models, using some simple RHEL-AI and Instruct Lab tooling"
 ---
 
-While the ACME Financial Services (ACME FS) team is evaluating OpenShift AI they admit that they are on the GenAI hype train and that train is gaining momentum in the ACME executive ranks. They did a lot of experimentation, finetuning, RAG, prompt engineering, but they just found that the hallucinations increased the more finetuning they do, and even the most well engineered prompts would not be a 100% guarantee of the GenAI model not hallucinating.
+While the ACME Financial Services (ACME FS) team is evaluating OpenShift AI they admit that they are on the GenAI hype train and that train is gaining momentum amongst the ACME executive ranks. They did a lot of experimentation, finetuning, RAG, prompt engineering, but they just found that the hallucinations increased the more finetuning they do, and even the most well engineered prompts would not be a 100% guarantee of the GenAI model not hallucinating.
 So the announcement of Instruct LAB is pretty much what they've been looking for.
 
 Your challenge is to help ACME by showcasing the following things:
@@ -28,26 +28,26 @@ Documentation you may find helpful is:
 - FYI - In case you want to build your RHEL AI image yourself later, have a look at the dev preview approach here: https://github.com/RedHatOfficial/rhelai-dev-preview
 
 ## 6.1 - Setting Up
-The ACMEFS team wants to start with a true blue through-and-through open source approach. This means a model that's avaialable as open source and which was trained on open source data and hence they want to use the Granite model familiy. For that your job as the supporting Red Hatter is is to help the team show how to download a model and serve it.
+The ACMEFS team wants to start with a true blue through-and-through open source approach. This means a model that's avaialable as open source and which was trained on open source data and hence they want to use the Granite model familiy. For that your job as the supporting Red Hatter is to help the team show how to download a model and serve it.
 - Go to demo.redhat.com and order your teams' InstructLab RHEL VM (Nvidia/CUDA) environment
 - Use the virtual python environment if you want GPU acceleration
-- Install the instruct lab command line tooling
+- Install the instruct lab command line tooling - make sure it's version v0.16.1
 - Download the granite model from instructlab/granite-7b-lab-GGUF and name it 'granite-7b-lab-Q4_K_M.gguf'
 - Serve the Model
 
 ## 6.2 - Chat and test knowledge
-The team now wants to first try and test-drive the newly downloaded model by chatting with it to get a feel for it.
+The team now wants to first try and test-drive the newly downloaded model by chatting with it to get a feel for a Granite model.
 - Chat with the model and test its knowledge about Instruct Lab 
 If you find the answers somewhat peculiar, your mission is to fix that - should you accept it. And no, this message will not self-destruct. Should you be happy with the answer you can select a different knowledge area to improve.
 
 ## 6.3 - Add new knowledge
-The real reason organisations want to use AI is because they can encode institutional knowledge that leads to either competitive advtange or reducing cost by supporting internal processes. With finetuning this is hard to accomplish as models seem to struggle with connecting new and unknown content with existing pre-trained content. That's why model alignment is such a gamechanger. It allows to encode new organisational knowledge into an AI model, the same way RDMBS databases allowed  data or 'knowledge' to be connected and related to via foreign key constraints. Now you show how this is done with InstructLab by adding new knowledge:
+The real reason organisations want to use AI is because they can encode institutional knowledge that leads to either a competitive advtange or reducing cost by supporting internal processes. With finetuning this is hard to accomplish as models seem to struggle with connecting new and unknown content with existing pre-trained content. That's why model alignment is such a gamechanger. It allows organisations to encode their knowledge into an AI model, the same way RDMBS databases allowed  data or 'knowledge' to be connected and related to via foreign keys back in the days. Now you show how this is done with InstructLab by adding new knowledge to their Granite foundation model:
 - Utilise the existing InstructLab taxonomy on your image
-- Add new knowledge (the InstructLab example knowledge file is at ~/files/qna.yaml)
-- Optional, but recommended: Verify that the taxonomy tree is A-OK.
+- Add new knowledge (the InstructLab example knowledge file containing InstructLab knowledge is at ~/files/qna.yaml)
+- Show ACME how to verify that the taxonomy tree is A-OK before you proceed.
 
 ## 6.4 - Generate synthetic data
-Once you are confident that your taxonomy tree is ok (you might want to show that command to the ACMEFS team) you are now showing how synthetic data is generated to ACME:
+Once you are confident that your taxonomy tree is ok you are now showing how synthetic data is generated:
 - Generate new synthetic data with a teacher model 
 - Discuss: Does synthetic data generation need a model being served? Why/Why not?
 
@@ -60,19 +60,19 @@ You now proof to the ACME FS team that there was indeed synthetic data generated
 (not so) Fun Fact: The upstream version of ilab doesn't actually use a critic model at the moment, it just checks for format errors. RHEL AI will use a critic model.
 
 ## 6.6 - Train the student model
-Now as you have shown that new data is available you use this data to train (or align) the existing granite model with the new data
-- Does training require a model being served? Why or Why not?
-- Decide if you want hardware acceleration, let iLab know when kicking off to train the model
+Now as you have shown that new data is available you use this data to instruction-tune / train (or align) the existing granite model with the new data
+- Discuss: Does training require a model being served? Why or Why not?
+- Decide if you want hardware acceleration, let iLab know when kicking off training the model
 - Discuss: When would you / should you use quantisation?
 
 The ACMFS team has experiemented in the past with quantization, they know how it works so no need to show that now, they are more interested in seeing the new data being baked into the new version of the granite model.
 
 ## 6.7 - Chat & verify newly added knowledge
 - Chat with the newly trained model and check if it has the additional knowledge you added.
-- Create a screenshot of the model served as well as the model prompt and output and post it in the slack channel.
+- Create a screenshot of the model served as well as the model prompt and answer and post it in the slack channel.
 
 ## 6.8 - Hints!
-The first hint is free: In scenario 6, you will need to provision 15 minutes time for synthetic data generation as well as 20 minutes for model training. You might want to make this part of your strategy while presenting to ACME FS by using a smart mix of slides and demo.
+The first hint is free: In scenario 6, you will need to provision 15 minutes time for synthetic data generation as well as 20 minutes for model training. You might want to make this part of your execution strategy.
 
 # HINTS
 If you get stuck on a question, fear not, perhaps try a different approach. If you have tried everything you can think of and are still stuck you can unlock a hint for `5` points by posting a message in the `#event-anz-ocp-ai-hackathon` channel with the message:
