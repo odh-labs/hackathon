@@ -1,4 +1,4 @@
-
+---
 title: Empower organisations to encode their knowledge into purpose built Large Language Models 
 exercise: 6
 date: '2024-06-25'
@@ -12,13 +12,13 @@ The ACME Financial Services team is on the GenAI hype train and gaining mommentu
 So the announcement of Instruct LAB is pretty much what they've been looking for.
 
 Your challenge is to 
-1) Setup the InstructLab environment
+1) Setup the InstructLab environment - use the showroom UI if you feel a need for speed.
 2) Chat with the model (student model) and see what it knows about itself (InstructLab)
 3) Add new knowledge 
 4) Generate synthetic data (via a teacher model) - this will take approx 15 minutes
-5) Verify the synthetic data generation via the critic model output
+5) Show proof that the synthetic data generation has happened
 6) Train the student model to integrate the new knowledge - this will take approx 20 minutes
-7) Verify that the new knowledge is present
+7) Show proof that the new knowledge is present
 
 ## 6.0 - Be in the Know...
 - You might want to consider that the synthetic data generation will take approx 15min and the model training approx 20min.
@@ -32,6 +32,7 @@ Documentation you may find helpful is:
 - Go to demo.redhat.com and order your teams' InstructLab RHEL VM (Nvidia/CUDA) environment
 - Use the virtual python environment if you want GPU acceleration
 - Install the instruct lab command line tooling
+- Download the granite model from instructlab/granite-7b-lab-GGUF and name it 'granite-7b-lab-Q4_K_M.gguf'
 - Serve the Model
 
 ## 6.2 - Chat and test knowledge
@@ -40,10 +41,10 @@ If you find the answers somewhat peculiar, your mission is to fix that - should 
 
 ## 6.3 - Add new knowledge
 - Utilise the existing InstructLab taxonomy on your image
-- Add new knowledge. 
-- Optional: Verify that the taxonomy tree is A-OK.
+- Add new knowledge (the InstructLab example knowledge file is at ~/files/qna.yaml)
+- Optional, but recommended: Verify that the taxonomy tree is A-OK.
 
-## 6.4 - Generate syntheic data
+## 6.4 - Generate synthetic data
 - Generate new synthetic data with a teacher model 
 - Discuss: Does synthetic data generation need a model being served? Why/Why not?
 
