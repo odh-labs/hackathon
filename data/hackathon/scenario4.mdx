@@ -38,6 +38,9 @@ Documentation you may find helpful is:
 ## 4.3 - Ensure Image is present in the Internal OpenShift Container Registry
 After building an image, you'll need to ensure the image is present in the Internal OpenShift Container Registry.
 
+A hint is available from the moderators
+- Hint 4.3 - Buiding and pushing your image to the OpenShift Internal registry
+
 Documentation you may find helpful is:
 - https://docs.openshift.com/container-platform/4.15/registry/index.html
 - https://docs.openshift.com/container-platform/4.15/openshift_images/image-streams-manage.html
@@ -55,42 +58,4 @@ If your ACME Financial Services custom image  `acme-workbench-ai-custom` is avai
 Please review [team name] solution for exercise 4.
 
 This exercise is worth 25 points. The event team will reply in slack to confirm your updated team total score.
-
-
-TODO PULL all Check your work sections from https://github.com/jmhbnz/workshops/blob/main/data/workshop/scenario1.mdx
-
-
-# HINTS
-
-## 1.5 - Hints!
-The first hint is free: In scenario 6, you will need to provision 15 minutes time for synthetic data generation as well as 20 minutes for model training. You might want to make this part of your strategy to win.
-
-If you get stuck on a question, fear not, perhaps try a different approach. If you have tried everything you can think of and are still stuck you can unlock a hint for `5` points by posting a message in the `#event-anz-ocp-ai-hackathon` channel with the message:
-
-> [team name] are stuck on [exercise] and are unlocking a hint.
-
-A hackathon organiser will join your breakout room to share the hint with you 🤫.
-
-
- TODO Tom 
- - move the hint to a Google doc
- - move the contents of this repo to the final github location:
-
-[4.2.1]
-Solution via Helm Chart is available here: https://github.com/butler54/rhoai-custom-image
-
-            TODO - MOVE TO DOCS:
-            oc project redhat-ods-applications
-
-            install the helm chart in the namespace redhat-ods-applications
-            helm install rhoai-custom-image ./helm
-
-            check the image is present
-            oc get imageStream -n redhat-ods-applications
-
-            check the image path in the registry
-            oc get imageStream -n redhat-ods-applications my-custom-image-stream -o yaml
-
-            if the image doesn't appear, import the image manually
-
 
