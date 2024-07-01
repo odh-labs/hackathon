@@ -37,7 +37,8 @@ Wait until the three operators specified in the previoius section have fully pro
 You won't need any Custom Resources for OpenShift Service Mesh and OpenShift Serverless
 
 You will need one for OpenShift AI. A valid strategy would be to open the yaml view and go with all the defaults - the only addition to be to add this knative-serving-cert secret
-```
+
+```yaml
 spec:
  components:
    kserve:
