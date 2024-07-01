@@ -8,18 +8,14 @@ Below are the instructions for manually setting up an environment to run the hac
 
 * Cluster provisioning
 
-** Cloud cluster
-
-Each team participating in the hackathon will require a [[https://aws.amazon.com/rosa][Red Hat OpenShift on AWS (ROSA)]] cluster, which we will provision via the [[https://demo.redhat.com/catalog?item=babylon-catalog-prod/sandboxes-gpte.rosa.prod&utm_source=webapp&utm_medium=share-link][Red Hat Demo System]]. When requesting the environments we enable the workshop user interface.
-
-** On-premises cluster
-
-Each team will also require a Single Node OpenShift cluster, representing their teams on premises environment which we will provision via the [[https://demo.redhat.com/catalog?item=babylon-catalog-prod/openshift-cnv.ocpmulti-single-node-cnv.prod&utm_source=webapp&utm_medium=share-link][Red Hat Demo System]]. When requesting the environments we enable the workshop user interface.
+Each team participating in the hackathon will require a [[https://aws.amazon.com/rosa][Red Hat OpenShift on AWS (ROSA)]] cluster, which we will provision via the [[https://demo.redhat.com/catalog?item=babylon-catalog-prod/sandboxes-gpte.rosa.prod&utm_source=webapp&utm_medium=share-link][Red Hat Demo System]]. When requesting the environments we enable the workshop user interface with:
+- The title `OpenShift AI Hackathon`
+- Number of instances set to `12`
 
 
-* Cluster setup - on-premises
+* Cluster setup
 
-For each on-premises cluster provisioned for the hackathon, the following steps need to be performed:
+For each cluster provisioned for the hackathon, the following steps need to be performed:
 
 
 ** Log in to cluster
@@ -27,6 +23,32 @@ For each on-premises cluster provisioned for the hackathon, the following steps 
 #+begin_src tmux
 oc login --web <api-route>
 #+end_src
+
+** Create gpu machine pool
+
+Our first task is to ensure each cluster has a GPU `MachineSet` present, we can follow the instructions from https://cloud.redhat.com/experts/rosa/gpu to complete this.
+
+#+begin_src tmux
+# Define paramaters for machineset
+export GPU_INSTANCE_TYPE='g5.8xlarge'
+export CLUSTER_NAME=<cluster-name>
+export MACHINE_POOL_NAME=nvidia-gpu-pool
+export MACHINE_POOL_REPLICA_COUNT=1
+
+# Create the machineset with rosa cli
+rosa create machinepool \
+  --cluster="${CLUSTER_NAME}" \
+  --name="${MACHINE_POOL_NAME}" \
+  --replicas="${MACHINE_POOL_REPLICA_COUNT}" \
+  --instance-type="${GPU_INSTANCE_TYPE}"
+
+# Wait for the machineset to be ready
+oc wait --for=jsonpath='{.status.readyReplicas}'=1 machineset \
+  --selector hive.openshift.io/machine-pool="${MACHINE_POOL_NAME}" \
+  --namespace openshift-machine-api \
+  --timeout=600s
+#+end_src
+
 
 ** Install minio via oc
 
@@ -36,6 +58,8 @@ oc new-project minio
 oc apply -f setup/minio-setup.yaml
 
 oc rollout status deployment/minio --watch
+
+
 #+end_src
 
 ** TODO Consider creating a cluster web terminal pod
@@ -55,7 +79,7 @@ or use this:
 https://github.com/tnscorcoran/rhods-finetunning-demo/blob/main/vllm_get_from_huggingface.ipynb
 
 
-** Upload model to on-prem cluster minio
+** Upload model to cluster minio
 Consider using this:
 https://github.com/tnscorcoran/rhods-finetunning-demo/blob/main/vllm_push_to_minio.ipynb
 
@@ -72,20 +96,3 @@ python3 setup/minio-upload.py
 #+end_src
 
 
-* Cluster setup - cloud
-
-** Login to rosa cluster
-
-#+begin_src tmux
-oc login --web <api-route>
-#+end_src
-
-** Install minio via oc
-
-#+begin_src tmux
-oc new-project minio
-
-oc apply -f setup/minio-setup.yaml
-
-oc rollout status minio --watch
-#+end_src
