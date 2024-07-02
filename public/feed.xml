@@ -70,5 +70,15 @@
     <category>openshift</category><category>ai</category><category>kubernetes</category><category>rhel ai</category><category>instruct lab</category>
   </item>
 
+  <item>
+    <guid>https://odh-labs.github.io/hackathon/hackathon/scenario7</guid>
+    <title>Accelerate GenAI experimentation with Podman</title>
+    <link>https://odh-labs.github.io/hackathon/hackathon/scenario7</link>
+    <description>Can you pull of a clutch live demo for Podman Desktops new AI features?</description>
+    <pubDate>Tue, 02 Jul 2024 00:00:00 GMT</pubDate>
+    <author>jablair@redhat.com (Red Hat)</author>
+    <category>podman desktop</category><category>ai lab</category><category>genai</category><category>granite</category><category>ai applications</category>
+  </item>
+
     </channel>
   </rss>
