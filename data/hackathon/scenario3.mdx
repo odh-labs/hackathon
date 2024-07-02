@@ -1,7 +1,7 @@
 ---
 title: Hybrid Cloud AI model deployment
 exercise: 3
-date: '2024-06-05'
+date: '2024-06-07'
 tags: ['openshift','ai','kubernetes']
 draft: false
 authors: ['default']
@@ -11,20 +11,26 @@ summary: "Let's deploy the first model across the hybrid cloud."
 As a sales team you've got an upcoming demo with the ACME Financial Services data science team, who have been training models on their laptops.
 The team have given you access to one of their models in the ACME Financial Services object storage and want to see how this could be deployed to a cluster running in the cloud.
 
-## 3.1 - Examine your On-Premises and Cloud based storage
+You slept in this morning! You've only got 30 minutes to get this demo going! Can you make it happen???!!
+<Zoom>
+|![cluster](/hackathon/static/images/hackathon/5f4drd.gif)                    |
+|:-----------------------------------------------------------------------------:|
+| *Let the speed run begin*                                            |
+</Zoom>
 
-For this task, your team are required to use the `granite-7b-lab` model available in the object storage running in the ACME Financial Services on prem cluster which is based on Minio.
 
-The `granite-7b-lab` model is available in the object storage running in the ACME Financial Services on prem cluster which is based on Minio. It's located under the `models` bucket.
-After locating the model in on premises object storage, your team already replicated this model to the ACME Financial Services cloud cluster object storage (to a bucket and sub-folder under the same name) so that it could be served in future.
+## 3.1 - Examine your Cloud based storage
 
-Examine both storage locations.
+For this task, your team are required to use the `granite-7b-lab` model available in the object storage running in the ACME Financial Services cloud cluster which is based on Minio.
+It's located under the `models` bucket.
+
+Examine the model storage bucket. You'll need to locate the Route for Minio and the login credentials - which are available in a secret.
 
 ## 3.2 - Install  operators related to Openshift AI 
 
-Now that you're aware of ACME's replication requirements their chosen model to their cloud OpenShift Cluster, it's time to do that replication and then serve the model ASAP.
+Now that you're aware of ACME's chosen model on their cloud OpenShift Cluster, it's time to serve the model ASAP!
 
-For the first part of this challenge your team must demonstrate to ACME how to install OpenShift AI, replicate to the cloud and serve the existing model called `granite-7b-lab` via OpenShift AI.
+For the first part of this challenge your team must demonstrate to ACME how to install OpenShift AI, and serve the existing model called `granite-7b-lab` via OpenShift AI.
 
 Install the following opertors (do not install any custom resources)
 - OpenShift AI
@@ -33,10 +39,11 @@ Install the following opertors (do not install any custom resources)
 
 
 ## 3.3 - Install OpenShift AI
-Wait until the three operators specified in the previoius section have fully provisioned, before proceeding.
+
+Wait until the three operators specified in the previous section have fully provisioned, before proceeding.
 You won't need any Custom Resources for OpenShift Service Mesh and OpenShift Serverless
 
-You will need one for OpenShift AI. A valid strategy would be to open the yaml view and go with all the defaults - the only addition to be to add this knative-serving-cert secret
+You will need a `Data Science Cluster` for OpenShift AI. A valid strategy would be to open the yaml view and go with all the defaults - the only addition to be to add this knative-serving-cert secret
 
 ```yaml
 spec:
@@ -53,13 +60,13 @@ spec:
 ```
 
 Documentation you may find helpful is:
-- https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2-latest/html/serving_models/serving-large-models_serving-large-models#configuring-automated-installation-of-kserve_serving-large-models
-
+- https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html/serving_models/index
+- https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html/serving_models/serving-large-models_serving-large-models
 
 
 ## 3.4 - Set up your OpenShift AI project and workbench
 
-An OpenShift AI project maps directly to an OpenShift project, enjoying the same RBAC and isoltion capailities.
+An OpenShift AI project maps directly to an OpenShift project, enjoying the same RBAC and isolation capailities.
 OpenShift AI Workbenches pertain to a base container image, encapsulating a particular toolset used by the data scientists, e.g. Pytorch, Tensorflow etc.
 
 Now open OpenShift AI and do the following
@@ -67,10 +74,9 @@ Now open OpenShift AI and do the following
 - create a workbench that 
   - uses Pytorch as a basis
   - uses a Large container size
-  - uses a Persistent Volume of at least 100GB 
+  - uses a Persistent Volume of at least 80GB 
   - uses a Data Connection to your Minio object storage
   - uses a Medium sized Container without an accelerator
-
 
 Documentation you may find helpful is:
 
@@ -78,18 +84,15 @@ Documentation you may find helpful is:
 
 - https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html/getting_started_with_red_hat_openshift_ai_self-managed/creating-a-workbench-select-ide_get-started
 
-
-
-
-
 ## 3.5 - Use your cloud-based OpenShift AI to Serve the model and make it easily consumable by intelligent applications for inference
+
 Single Model Serving is the preferred mode for serving LLMs
 
-
 ### 3.5.1 - Single Model Serving
-VLLM is a popular model server format whose APIs are compatible with Open AI (Chat GPT) APIs. This format then lends itself to easy migration of apps already using Open AI - to OpenShift AI.
 
-Add a vLLM model server that uses a Data Connection that to your cloud cluster's Minio and the subfolder of its `models` bucket that contains your Granite model
+vLLM is a popular model server format whose APIs are compatible with Open AI (Chat GPT) APIs. This format then lends itself to easy migration of apps already using Open AI - to OpenShift AI.
+
+Add a vLLM model server called `model-speedrun` that uses a Data Connection to your cloud cluster's Minio and the subfolder of its `models` bucket that contains your Granite model
 Documentation you may find helpful is:
 - https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html-single/serving_models/index#enabling-the-single-model-serving-platform_serving-large-models
 
@@ -100,14 +103,19 @@ After perhaps 5 mins, your model server should be ready - with an Inference URL
 
 You challenge is to make an inference API call. 
 
-Free hint: the Fast API (Swagger) interface is a fast and effective way to do this
+Free hint: the Fast API (Swagger) interface is a quick and effective way to do this
 
 Free hint: no Authorisation or credentials should be necessary
-
-2 more hints are available from the moderators
-- Hint 3.5.2.1 - Fast API Inference URL
-- Hint 3.5.2.2 - Specific Inference API endpoint and payload
 
 Documentation you may find helpful is:
 - https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html-single/serving_models/index#making-inference-requests-to-models-deployed-on-single-model-serving-platform_serving-large-models
 
+## 3.6 - Check your work
+
+To complete this challenge, take a screenshot showing Fast API inference call and response payload.
+
+Once done, please post a message in `#event-anz-ocp-ai-hackathon` with the screenshot and message:
+
+> Please review [team name] solution for exercise 3.
+
+This exercise is worth `750k`. The event team will reply in slack to confirm your updated team total deal size.
