@@ -65,28 +65,15 @@ Documentation you may find helpful is:
 - https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html/serving_models/index
 - https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html/serving_models/serving-large-models_serving-large-models
 
-## 3.4 - Set up your OpenShift AI project and workbench
+## 3.4 - Set up your OpenShift AI project
 
-An OpenShift AI project maps directly to an OpenShift project, enjoying the same RBAC and isolation capailities.
-
-OpenShift AI Workbenches pertain to a base container image, encapsulating a particular toolset used by the data scientists, e.g. Pytorch, Tensorflow etc.
-
-Time to finish this demo prep, you OpenShift AI and do the following:
-
-- create a project named `model-speedrun`
-- create a workbench `model-speedrun-wb` that:
-  - uses `Pytorch` as a basis
-  - uses a `Large` container size
-  - uses a Persistent Volume of at least `80GB`
-  - uses a Data Connection to your minio object storage
+An OpenShift AI project maps directly to an OpenShift project, enjoying the same RBAC and isolation capabilitiesm, create a project named `model-speedrun` so you can serve the IBM Granite model.
 
 Documentation you may find helpful is:
 
 - https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html/getting_started_with_red_hat_openshift_ai_self-managed/creating-a-data-science-project_get-started
 
-- https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html/getting_started_with_red_hat_openshift_ai_self-managed/creating-a-workbench-select-ide_get-started
-
-## 3.5 - Service the model
+## 3.5 - Serve the model
 
 vLLM is a popular model server format whose APIs are compatible with Open AI (Chat GPT) APIs. This format then lends itself to easy migration of apps already using Open AI - to OpenShift AI. For your demo you will use **Single Model Serving**.
 
