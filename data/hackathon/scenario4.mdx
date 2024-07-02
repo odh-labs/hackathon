@@ -1,31 +1,31 @@
 ---
 title: Open Innovation - Integrating a new piece of tooling into OpenShift AI Workspace
-exercise: 3
-date: '2024-06-05'
+exercise: 4
+date: '2024-06-08'
 tags: ['openshift','ai','kubernetes']
 draft: false
 authors: ['default']
-summary: "Let's add some tooling in satndardised way available to all data science users"
+summary: "Let's add some tooling available in a standardised way to all data science users"
 ---
 
 The ACME Financial Services team are underway with the OpenShift AI Proof of Concept and are now stuck with a workbench problem.
-The ACME has been using the `Standard Data Science` workbench image with Python 3.9 and are now trying to enable additional libraries for their entire team.
-While experimenting they were completing this with a `pip install` insde their Jupyter Notebooks. They now need these libraries to be baiked into their workbench images, so they can standardise on tooling across the team.
+The ACME has been using the `Standard Data Science` workbench image with `Python 3.9` and are now trying to enable additional libraries for their entire team.
+While experimenting they were completing this with a `pip install` inside their Jupyter Notebooks. They now need these libraries to be baked into their workbench images, so they can standardise on tooling across the team.
 
 As the pre-sales team, you've offered to show how this is done.
 
+## 4.1 - Review notebook requiring custom Python library within an existing workbench
 
-## 4.1 - Review notebook requiring custom Python library with in an existing workbench
 Fire up an OpenShift AI workbench, using the `Standard Data Science` base image and launch/run the Notebook https://github.com/odh-labs/hackathon/blob/main/temp/scenario4_open_innovation/custom-image.ipynb
-You see it fails due to missing library pypdf
-
+You see it fails due to missing library `pypdf`.
 
 ## 4.2 - Build custom workbench image
-Your first task after reviewing the failing scenario to build a custom workbench image on the ACME Financial Services On Premises cluster via a `BuildConfig`.  
+
+Your first task after reviewing the failing scenario to build a custom workbench image on the ACME Financial Services cluster.  
 
 You have 2 options 
-1) Use a Build Config and push the image as an Image Stream into the  redhat-ods-applications  namespace
-2) Use Podman to build a container locally and push to Internal OpenShift Container Registry
+1) Use a Build Config and push the image as an Image Stream into the  `redhat-ods-applications` namespace
+2) Use Podman to build a container locally and push to Internal OpenShift Container Registry, then add it to OpenShift AI through the web interface.
 
 Your custom image name should be `acme-workbench-ai-custom`
 
@@ -34,12 +34,9 @@ Documentation you may find helpful is:
 - https://docs.openshift.com/container-platform/4.15/cicd/builds/understanding-buildconfigs.html
 - https://github.com/opendatahub-io-contrib/workbench-images
 
-
 ## 4.3 - Ensure Image is present in the Internal OpenShift Container Registry
-After building an image, you'll need to ensure the image is present in the Internal OpenShift Container Registry.
 
-A hint is available from the moderators
-- Hint 4.3 - Buiding and pushing your image to the OpenShift Internal registry
+After building an image, you'll need to ensure the image is present in the Internal OpenShift Container Registry.
 
 Documentation you may find helpful is:
 - https://docs.openshift.com/container-platform/4.15/registry/index.html
