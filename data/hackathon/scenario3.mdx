@@ -77,17 +77,44 @@ Documentation you may find helpful is:
 
 vLLM is a popular model server format whose APIs are compatible with Open AI (Chat GPT) APIs. This format then lends itself to easy migration of apps already using Open AI - to OpenShift AI. For your demo you will use **Single Model Serving**.
 
-Add a vLLM model server called `model-speedrun` that uses a data connection to your cluster's object storage and the subfolder of its `models` bucket that contains your Granite model.
+Add a vLLM model server called `model-speedrun-[team name]` that uses a data connection to your cluster's object storage and the subfolder of its `models` bucket that contains your Granite model.
 
 Documentation you may find helpful is:
 
 - https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html-single/serving_models/index#enabling-the-single-model-serving-platform_serving-large-models
 
+<Zoom>
+|![model deploy](/hackathon/static/images/hackathon/model-deploy.png)           |
+|:-----------------------------------------------------------------------------:|
+| *Keep an eye on your model deployment progress*                               |
+</Zoom>
+
 ### 3.6 - Make an inference call to your model
 
 Anxiously watching the clock in your laptops taskbar you wait the five minutes or so for your model server to become ready with an inference URL so you can test everything is working before you join the call with the ACME Financial Services team.
 
-Free hint: the Fast API (Swagger) interface is a quick and effective way to make the test inference call (no Authorisation or credentials should be necessary).
+To make the an inference call to your model use the `v1/chat/completions` Swagger `POST` interface, adapting the below payload as required:
+
+```json
+{
+  "model": "test",
+  "messages": [
+    {
+      "role": "system",
+      "content": "You are Granite, a large language model trained on OpenShift AI."
+    },
+    {
+      "role": "user",
+      "content": "Tell me about the history of New York City."
+    }
+  ],
+  "temperature": 0.7,
+  "max_tokens": 150,
+  "top_p": 1.0,
+  "frequency_penalty": 0.0,
+  "presence_penalty": 0.0
+}
+```
 
 Documentation you may find helpful is:
 

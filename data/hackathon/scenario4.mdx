@@ -1,58 +1,74 @@
 ---
-title: Open Innovation - Integrating a new piece of tooling into OpenShift AI Workspace
+title: Adding custom tooling to a workbench
 exercise: 4
 date: '2024-06-08'
 tags: ['openshift','ai','kubernetes']
 draft: false
 authors: ['default']
-summary: "Let's add some tooling available in a standardised way to all data science users"
+summary: "Let's make some tooling available in a standardised way to all data science users"
 ---
 
-The ACME Financial Services team are underway with the OpenShift AI Proof of Concept and are now stuck with a workbench problem.
-The ACME has been using the `Standard Data Science` workbench image with `Python 3.9` and are now trying to enable additional libraries for their entire team.
+Thanks you to your slick troubleshooting and earlier demo's the ACME Financial Services data science team are underway with the OpenShift AI Proof of Concept and are now stuck with a workbench problem.
+
+The ACME team has been using the `Standard Data Science` workbench image with `Python 3.9` and are now trying to enable additional libraries for their entire team.
+
 While experimenting they were completing this with a `pip install` inside their Jupyter Notebooks. They now need these libraries to be baked into their workbench images, so they can standardise on tooling across the team.
 
-As the pre-sales team, you've offered to show how this is done.
+One of our big sales pitches to the team earlier in the sales cycle was how easy it would be for them to integrate their own open source tooling into OpenShift AI, now the rubber has hit the road we need to show them how it's done.
 
-## 4.1 - Review notebook requiring custom Python library within an existing workbench
+## 4.1 - Review notebook requiring custom libraries
 
-Fire up an OpenShift AI workbench, using the `Standard Data Science` base image and launch/run the Notebook https://github.com/odh-labs/hackathon/blob/main/temp/scenario4_open_innovation/custom-image.ipynb
-You see it fails due to missing library `pypdf`.
+Fire up an OpenShift AI workbench named `open-innovation`, using the `Standard Data Science` base image and launch/run the notebook https://github.com/odh-labs/hackathon/blob/main/temp/scenario4_open_innovation/custom-image.ipynb
+
+Running the notebook cells you will see it fails currently due to missing library `pypdf`.
+
+<Zoom>
+|![workbench error](/hackathon/static/images/hackathon/workbench-error.png)     |
+|:-----------------------------------------------------------------------------:|
+| *Workbench notebook failing to run due to missing libraries*                  |
+</Zoom>
 
 ## 4.2 - Build custom workbench image
 
-Your first task after reviewing the failing scenario to build a custom workbench image on the ACME Financial Services cluster.  
+Your first challenge after reviewing the failing notebook is to build a custom workbench image that the ACME team can import and use as an example which would include the missing `pypdf` library.
 
-You have 2 options 
-1) Use a Build Config and push the image as an Image Stream into the  `redhat-ods-applications` namespace
-2) Use Podman to build a container locally and push to Internal OpenShift Container Registry, then add it to OpenShift AI through the web interface.
+You have 2 options:
+
+1) Use a Build Config and push the image as an `imagestream` into the  `redhat-ods-applications` namespace.
+2) Use Podman to build a container locally and push to internal OpenShift image registry or Quay.io, then add it to OpenShift AI through the web interface.
 
 Your custom image name should be `acme-workbench-ai-custom`
 
 Documentation you may find helpful is:
+
 - https://github.com/red-hat-data-services/notebooks
 - https://docs.openshift.com/container-platform/4.15/cicd/builds/understanding-buildconfigs.html
 - https://github.com/opendatahub-io-contrib/workbench-images
 
-## 4.3 - Ensure Image is present in the Internal OpenShift Container Registry
+## 4.3 - Ensure image is present in the internal registry
 
-After building an image, you'll need to ensure the image is present in the Internal OpenShift Container Registry.
+After building an image, you'll need to ensure the image is present in the internal OpenShift image registry.
 
 Documentation you may find helpful is:
+
 - https://docs.openshift.com/container-platform/4.15/registry/index.html
 - https://docs.openshift.com/container-platform/4.15/openshift_images/image-streams-manage.html
 
-TODO Add screenshots
-
 ## 4.4 - Verify image is imported into OpenShift AI
-Your newly imported image should be visible in the `Image selection` dropdown within the Workbench tab inside your OpenShift AI 
 
-TODO Add screenshots
+Your newly imported image should be visible in the `Image selection` dropdown within the Workbench tab inside your OpenShift AI
+
+<Zoom>
+|![custom workbench](/hackathon/static/images/hackathon/custom-workbench.png)   |
+|:-----------------------------------------------------------------------------:|
+| *Custom workbench displaying within OpenShift AI*                             |
+</Zoom>
 
 ## 4.5 - Check your work
-If your ACME Financial Services custom image  `acme-workbench-ai-custom` is available in the dropdown, please post a screenshot of it to  #event-anz-ai-hackathon with the message:
 
-Please review [team name] solution for exercise 4.
+If your ACME Financial Services custom image  `acme-workbench-ai-custom` is available in the dropdown and starting successfully please post a screenshot of it to `#event-anz-ocp-ai-hackathon` with the message:
+
+> Please review [team name] solution for exercise 4.
 
 This exercise is worth `750k`. If you engage the services of the contractor (by obtaining a hint from the hackathon moderators), it will cost you `25k`, which will be deducted from the respective challenge's deal value to your team.
 The event team will reply in slack to confirm your updated team total deal size.
