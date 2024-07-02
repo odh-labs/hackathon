@@ -10,40 +10,40 @@ summary: "Let's get underway with the hackathon."
 
 Welcome to the OpenShift AI Hackathon! Here you'll have a chance to build your AI prowess.
 
-As a sales team you're in a race to reach the highest deal size before the session concludes! If multiple teams complete all exercises so share deal sizes a further ranking will be done by elapsed time based on when slack messages are sent.
+As a sales team you're in a race to reach the highest deal size before the hackathon concludes! If multiple teams complete all exercises and share deal sizes a further ranking will be done by elapsed time based on when slack messages are sent.
 
 **Let's get started!**
 
 ## 1.1 - The hackathon scenario
 
 <Zoom>
-|![cluster](/hackathon/static/images/hackathon/acme-bank.jpeg)                  |
+|![acme-bank](/hackathon/static/images/hackathon/acme-bank.jpeg)                |
 |:-----------------------------------------------------------------------------:|
 | *Acme Financial Services*                                                     |
 </Zoom>
 
-ACME Financial Services is a large bank based in Australia. Their data science team have been tinkering with AI models on their laptops and are now ready to put a proper AI platform in place and properly operationalise some models.
+ACME Financial Services is a large bank based in Australia. Their data science team have been tinkering with AI models on their laptops and are now ready to put a proper AI platform in place to operationalise some models.
 
-The bank is currently going through a "bake off" evaluating multiple options for an AI platform. One of the potential options for ACME Financial Services is to adopt Red Hat OpenShift AI as an ML OPs platform. The bank already has OpenShift on-premises and has been exploring a ROSA cloud deployment as their target for AI model development for easy access to GPU resources.
+The bank is currently going through a "bake off" evaluating multiple options for an AI platform. One of the potential options for ACME Financial Services is to adopt [Red Hat OpenShift AI](https://www.redhat.com/en/technologies/cloud-computing/openshift/openshift-ai) as an ML OPs platform. The bank already has OpenShift on-premises and has been exploring a [Red Hat OpenShift Service on AWS (ROSA)](https://aws.amazon.com/rosa) cloud deployment as their target for AI model development because this will give them easy access to GPU resources.
 
-Your hackathon team are the pre-sales technical team engaging with various ACME teams and leadership to try and win the bake off, securing buy-in for a large scale OpenShift AI deployment to proceed.
+Your hackathon team are the pre-sales technical team engaging with various ACME teams and leadership to try and win the bake off, securing the technical and mindshare wins to come out on top of the "bake off".
 
-We're chasing a `$5` million AUD deal. Each of the challenges you complete during this hackathon will secure an $AUD portion of this deal. At your disposal is a very expensive OpenShift and OpenShift AI contractor - whose services come at a cost of `$25,000` AUD per hour of engagement. You may engage them at various points throughout the challenges, but their costs will be deducted from the deal value you secure.
+We're chasing a `$5` million AUD deal 🤑. Each of the challenges you complete during this hackathon will secure an $AUD portion of this deal. To expedite the deal at your disposal is a very expensive OpenShift and OpenShift AI contractor - whose services come at a cost of `$25,000` AUD per hour of engagement. You may engage them at various points throughout the challenges, but their costs will be deducted from the deal value you secure.
 
-The winner will be the team with the highest deal secured.
+The winner will be the team with the highest deal $$ secured.
 
 ## 1.1 - Understanding the environment
 
 For this challenge your team will be given an AWS ROSA OpenShift 4 cluster representing the ACME cloud environment.
 
-You will also need an additional InstructLab RHEL AI machine to complete scenario 6.
+You will also need an additional InstructLab RHEL AI machine to complete scenario 6 and leverage Podman Desktop for scenario 7.
 
 All challenge tasks must be performed on these environments so your solutions can be graded successfully. You can and are encouraged to use any supporting documentation or other resources in order to tackle each of the challenge tasks.
 
 <Zoom>
 |![cluster](/hackathon/static/images/hackathon/cluster.png)                     |
 |:-----------------------------------------------------------------------------:|
-| *OpenShift cluster console*                                        |
+| *OpenShift cluster console*                                                   |
 </Zoom>
 
 ## 1.2 - Obtain your environment
@@ -51,13 +51,14 @@ All challenge tasks must be performed on these environments so your solutions ca
 Working in a small team you will have a shared cluster for team members to use. Your team will have a name allocated already.
 
 To get underway open your web browser and navigate to the link below to retrieve the cluster for your team:
-1. ROSA https://demo.redhat.com/workshop/z567br
+
+1. https://demo.redhat.com/workshop/z567br
 
 Register for each cluster using `[team name]@redhat.com` (e.g. `red@redhat.com`, `yellow@redhat.com` etc)
 and the password provided by your hackathon organisers. Registering with a team email will mean all your team members will be able to login and see the same cluster details for your shared cluster.
 
 <Zoom>
-|![cluster](/hackathon/static/images/hackathon/workshop.png)                    |
+|![registration](/hackathon/static/images/hackathon/workshop.png)               |
 |:-----------------------------------------------------------------------------:|
 | *Hackathon team registration page*                                            |
 </Zoom>

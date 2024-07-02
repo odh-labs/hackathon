@@ -8,39 +8,48 @@ authors: ['default']
 summary: "How do we use GPU accelerators??"
 ---
 
-As a sales team you've got an upcoming demo with the ACME Financial Services data science team, who have asked you to show them how to enable GPU support on their Cloud cluster (in your case represented by Red Hat OpenShift Service on AWS (ROSA))?
+As a sales team you've got an upcoming call with the ACME Financial Services Principal Data Scientist Peter Norvig, who has asked you to show them how to enable GPU support on their cloud cluster and started going off the deep end about how complex it was.
 
-You've spun up a demo environment to show them how it's done.
+They had apparently already managed to add a gpu machine pool, but are now lost with all the operator mumbo jumbo that you're supposed to do after that to get GPU's running in Kubernetes.
 
-## 2.1 - View Cluster GPU Machine Set
+You've agreed to show them how it's done and are joining the MicroSoft Skype for Business™ call in 5 minutes. Can you win back the support of Peter and keep the deal on track? Time to shine 😅
 
-For convenience, we have pre-ordered a new Machine Set using one of the g5 GPU instance types.
+<Zoom>
+|![training](/hackathon/static/images/hackathon/training.jpg)                   |
+|:-----------------------------------------------------------------------------:|
+| *Apparently gpu's are expensive??*                                            |
+</Zoom>
 
-Navigate to Compute > Machinesets and notice a Machineset using tone of the g5 GPU instance types.
-This is your GPU node.
+## 2.1 - View cluster machine pool
+
+You start off the call by double checking what Peter has already done just to make sure the GPU `MachinePool` looks ok.
+
+Navigating to `Compute` > `MachineSets` in the OpenShift cluster you take a note of the GPU enabled machine set that is present and the number of replicas.
 
 ## 2.2 - Install required operators
 
-While the GPU machine is provisioning, the next step is to install the two required operators:
-- Node Feature Discovery (NFD)
+With the GPU machine provisioned, you then walk Peter through how to install the two **required** operators:
+
+- Node Feature Discovery
 - Nvidia GPU Operator
 
-Install the following Custom resources - go with defaults
-- NodeFeatureDiscovery
-- ClusterPolicy
+With the operators installed you also step through creating the required **NodeFeatureDiscovery** and **ClusterPolicy** custom resources.
 
 Documentation you may find helpful is:
-- https://myopenshiftblog.com/enabling-nvidea-gpu-in-rhoai-openshift-data-science/
 
+- https://cloud.redhat.com/experts/rosa/gpu
 
+## 2.3 - Confirm the gpu model
 
-## 2.3 - Check your work
+That's it, you nailed it! Peter is impressed with how quickly and clearly you stepped him through the process at short notice and is back on side 🎉
 
-There is a CLI called `nvidia-smi` that you need to run within one of the pods to output various data associated the particular GPU model this node uses.
+One final question did pop up though. Peter couldn't remember which model of GPU came with his earlier created machine and wanted to double check that from within the OpenShift console, he also wanted to see some key details like GPU memory along with CUDA and driver versions.
 
-Your challenge is to take a screenshot showing the Nvidia GPU and share that screenshot.
+You remember the super helpful `nvidia-smi` cli utility which quickly prints all that summary information and run that for Peter to answer his questions. Job done!
 
-Once done, please post a message in `#event-anz-ocp-ai-hackathon` with the screenshot and message:
+## 2.4 - Check your work
+
+If you have won Peter back on side take a screenshot of the output from `nvidia-smi` and post a message in `#event-anz-ocp-ai-hackathon` with the screenshot and message:
 
 > Please review [team name] solution for exercise 2.
 
