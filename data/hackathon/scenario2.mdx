@@ -8,22 +8,16 @@ authors: ['default']
 summary: "How do we use GPU accelerators??"
 ---
 
-As a sales team you've got an upcoming demo with the Acme Financial Services data science team, who have asked you to show them how to enable GPU support on their On Premisies cluster (in your case represented by Red Hat OpenShift Service on AWS (ROSA))?
+As a sales team you've got an upcoming demo with the ACME Financial Services data science team, who have asked you to show them how to enable GPU support on their Cloud cluster (in your case represented by Red Hat OpenShift Service on AWS (ROSA))?
 
 You've spun up a demo environment to show them how it's done.
 
-## 2.1 - Add Cluster GPU Machine Pool
-Your first task for this challenge is to add a new Machine Pool using the instance type `g5.8xlarge`
-Name it `gpu`. Set the count to 1.
+## 2.1 - View Cluster GPU Machine Set
 
-You can do this either through 
-- the Red Hat Hybrid Cloud Console (https://console.redhat.com/openshift)
-- or the ROSA CLI (https://console.redhat.com/openshift/token/show)
+For convenience, we have pre-ordered a new Machine Set using one of the g5 GPU instance types.
 
-
-Documentation you may find helpful is:
-- https://cloud.redhat.com/experts/rosa/gpu/
-
+Navigate to Compute > Machinesets and notice a Machineset using tone of the g5 GPU instance types.
+This is your GPU node.
 
 ## 2.2 - Install required operators
 
@@ -31,15 +25,9 @@ While the GPU machine is provisioning, the next step is to install the two requi
 - Node Feature Discovery (NFD)
 - Nvidia GPU Operator
 
-Install the following Custom resources
+Install the following Custom resources - go with defaults
 - NodeFeatureDiscovery
 - ClusterPolicy
-
-The next steps should not be done until the GPU node is fully provisioned 
-You'll know this is complete using the following command
-```bash
-oc get node -l nvidia.com/gpu.present
-```
 
 Documentation you may find helpful is:
 - https://myopenshiftblog.com/enabling-nvidea-gpu-in-rhoai-openshift-data-science/
@@ -48,8 +36,12 @@ Documentation you may find helpful is:
 
 ## 2.3 - Check your work
 
-If your GPU is now running and labeled successfully, please post a message in `#event-anz-ocp-ai-hackathon` with the message:
+There is a CLI called `nvidia-smi` that you need to run within one of the pods to output various data associated the particular GPU model this node uses.
+
+Your challenge is to take a screenshot showing the Nvidia GPU and share that screenshot.
+
+Once done, please post a message in `#event-anz-ocp-ai-hackathon` with the screenshot and message:
 
 > Please review [team name] solution for exercise 2.
 
-This exercise is worth `25` points. The event team will reply in slack to confirm your updated team total score.
+This exercise is worth `750k`. The event team will reply in slack to confirm your updated team total deal size.
