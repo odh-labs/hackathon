@@ -81,48 +81,58 @@ Once the cluster gpu machinepool has been created we need to deploy [[https://mi
 #+NAME: Install minio via oc
 #+begin_src tmux
 # Deploy minio
-oc new-project minio && oc --namespace minio apply -f setup/minio-setup.yaml
+oc new-project minio && oc --namespace minio apply --filename setup/minio-setup.yaml
 
 # Wait for minio to come up
 oc --namespace minio rollout status deployment/minio --watch
 #+end_src
 
 
-With minio deployed we need to create a bucket and upload some content to it.
+With minio deployed we need to create a bucket and upload some content to it to pre seed a model. We can do this by remotely executing minio cli `mc` commands within the `minio` pod.
 
 #+NAME: Configure minio via oc
 #+begin_src tmux
-oc get pods -n minio
+# Retrieve the running minio pod
+pod=$(oc get pods --namespace "minio" --output name)
+
+# Retrieve the minio credentials
+minio_user=$(oc --namespace "minio" get secret "minio-secret" -o jsonpath='{.data.minio_root_user}' | base64 --decode)
+minio_pass=$(oc --namespace "minio" get secret "minio-secret" -o jsonpath='{.data.minio_root_password}' | base64 --decode)
+
+# Configure the minio cli alias
+oc --namespace "minio" exec "${pod}" -- mc alias set local http://localhost:9000 "${minio_user}" "${minio_pass}"
+
+# Make the models bucket
+oc --namespace "minio" exec "${pod}" -- mc mb "local/models"
 #+end_src
 
 
-** Download model from huggingface into each `on prem` clusters Minio `model`'s bucket
+** Populate minio bucket with model
+
+With the bucket created we need to push some model content to it, we can do that with the magic of `git` and `mc`. We need to start by downloading the bucket content.
+
 
 #+begin_src tmux
-HUGGINGFACE_TOKEN="HUGGINGFACE_TOKEN"
-pip install --upgrade huggingface_hub
-huggingface-cli login --token "${HUGGINGFACE_TOKEN}"
-git clone https://huggingface.co/instructlab/granite-7b-lab
+pod=$(oc get pods --namespace "minio" --output name)
+oc --namespace "minio" exec "${pod}" -- mkdir /tmp/model --parent
+oc --namespace minio exec "${pod}" -- curl https://huggingface.co/instructlab/granite-7b-lab/resolve/main/added_tokens.json?download=true -o /tmp/model/added_tokens.json
+oc --namespace minio exec "${pod}" -- curl https://huggingface.co/instructlab/granite-7b-lab/resolve/main/config.json?download=true -o /tmp/model/config.json
+oc --namespace minio exec "${pod}" -- curl https://huggingface.co/instructlab/granite-7b-lab/resolve/main/generation_config.json?download=true -o /tmp/model/generation_config.json
+oc --namespace minio exec "${pod}" -- curl -L https://huggingface.co/instructlab/granite-7b-lab/resolve/main/model-00001-of-00003.safetensors?download=true -o /tmp/model/model-00001-of-00003.safetensors
+oc --namespace minio exec "${pod}" -- curl -L https://huggingface.co/instructlab/granite-7b-lab/resolve/main/model-00002-of-00003.safetensors?download=true -o /tmp/model/model-00002-of-00003.safetensors
+oc --namespace minio exec "${pod}" -- curl -L https://huggingface.co/instructlab/granite-7b-lab/resolve/main/model-00003-of-00003.safetensors?download=true -o /tmp/model/model-00003-of-00003.safetensors
+oc --namespace minio exec "${pod}" -- curl https://huggingface.co/instructlab/granite-7b-lab/resolve/main/model.safetensors.index.json?download=true -o /tmp/model/model.safetensors.index.json
+oc --namespace minio exec "${pod}" -- curl https://huggingface.co/instructlab/granite-7b-lab/resolve/main/special_tokens_map.json?download=true -o /tmp/model/special_tokens_map.json
+oc --namespace minio exec "${pod}" -- curl https://huggingface.co/instructlab/granite-7b-lab/resolve/main/tokenizer.json?download=true -o /tmp/model/tokenizer.json
+oc --namespace minio exec "${pod}" -- curl -L https://huggingface.co/instructlab/granite-7b-lab/resolve/main/tokenizer.model?download=true -o /tmp/model/tokenizer.model
+oc --namespace minio exec "${pod}" -- curl https://huggingface.co/instructlab/granite-7b-lab/resolve/main/tokenizer_config.json?download=true -o /tmp/model/tokenizer_config.json
 #+end_src
 
-or use this:
-https://github.com/tnscorcoran/rhods-finetunning-demo/blob/main/vllm_get_from_huggingface.ipynb
-
-
-** Upload model to cluster minio
-Consider using this:
-https://github.com/tnscorcoran/rhods-finetunning-demo/blob/main/vllm_push_to_minio.ipynb
-
-TODO Run aws configure and pull values out of that automatically.
 
 #+begin_src tmux
-export AWS_ACCESS_KEY_ID=<placeholder>
-export AWS_SECRET_ACCESS_KEY=<placeholder>
-export AWS_DEFAULT_REGION=<placeholder>
-export AWS_S3_ENDPOINT=$(oc get route minio-api -o jsonpath='.spec.host')
-export AWS_S3_BUCKET="models"
+# Retreieve the pod name
+pod=$(oc get pods --namespace "minio" --output name)
 
-python3 setup/minio-upload.py
+# Upload files via minio cli
+oc --namespace "minio" exec "${pod}" -- mc cp --recursive /tmp/model local/models/granite-7b-lab
 #+end_src
-
-
