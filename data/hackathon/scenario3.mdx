@@ -1,49 +1,50 @@
 ---
-title: Hybrid Cloud AI model deployment
+title: Hybrid cloud model deployment
 exercise: 3
 date: '2024-06-07'
 tags: ['openshift','ai','kubernetes']
 draft: false
 authors: ['default']
-summary: "Let's deploy the first model across the hybrid cloud."
+summary: "Can you speedrun the deployment of a model?"
 ---
 
-As a sales team you've got an upcoming demo with the ACME Financial Services data science team, who have been training models on their laptops.
-The team have given you access to one of their models in the ACME Financial Services object storage and want to see how this could be deployed to a cluster running in the cloud.
+As a sales team you've got an upcoming demo with the entire ACME Financial Services data science team, who up to this point have been developing and deploying models on their laptops and want to see how easy it is to deploy a model from object storage within OpenShift AI.
 
-You slept in this morning! You've only got 30 minutes to get this demo going! Can you make it happen???!!
+This would be an ideal opportunity as a sales team to demo the deployment of an [IBM Granite model available from HuggingFace](https://huggingface.co/instructlab/granite-7b-lab).
+
+There's good news and bad news. Good news first, last night you put a copy of the chosen demo model `granite-7b-lab` into minio based object storage on your demo cluster. The bad news, you slept in this morning and now you've only got 30 minutes to get the rest of your demo ready! Can you make it happen???!!
+
 <Zoom>
-|![cluster](/hackathon/static/images/hackathon/5f4drd.gif)                    |
+|![speed run](/hackathon/static/images/hackathon/5f4drd.gif)                    |
 |:-----------------------------------------------------------------------------:|
-| *Let the speed run begin*                                            |
+| *Let the speed run begin*                                                     |
 </Zoom>
 
+## 3.1 - Examine your object storage
 
-## 3.1 - Examine your Cloud based storage
+For this task, your team are required to use the `granite-7b-lab` model available in the minio object storage running in your team cluster.
 
-For this task, your team are required to use the `granite-7b-lab` model available in the object storage running in the ACME Financial Services cloud cluster which is based on Minio.
-It's located under the `models` bucket.
+Examine the model storage bucket. You'll need to locate the `route` for minio and the login credentials - which are available in a `secret`.
 
-Examine the model storage bucket. You'll need to locate the Route for Minio and the login credentials - which are available in a secret.
+You quickly note down the bucket name and directory path you chucked the model into as you know you'll need that shortly to deploy it.
 
-## 3.2 - Install  operators related to Openshift AI 
+## 3.2 - Install OpenShift AI required operators
 
-Now that you're aware of ACME's chosen model on their cloud OpenShift Cluster, it's time to serve the model ASAP!
+With your chosen demo model ready in object storage, it's time to serve the model ASAP!
 
 For the first part of this challenge your team must demonstrate to ACME how to install OpenShift AI, and serve the existing model called `granite-7b-lab` via OpenShift AI.
 
-Install the following opertors (do not install any custom resources)
+Install the following operators (**do not create any operator custom resources**)
+
 - OpenShift AI
 - OpenShift Service Mesh
 - OpenShift Serverless
 
-
 ## 3.3 - Install OpenShift AI
 
-Wait until the three operators specified in the previous section have fully provisioned, before proceeding.
-You won't need any Custom Resources for OpenShift Service Mesh and OpenShift Serverless
+Wait until the three operators specified in the previous section have fully installed, before proceeding. You won't need any Custom Resources for OpenShift Service Mesh and OpenShift Serverless
 
-You will need a `Data Science Cluster` for OpenShift AI. A valid strategy would be to open the yaml view and go with all the defaults - the only addition to be to add this knative-serving-cert secret
+At this point you know you need to create a `DataScienceCluster` for OpenShift AI. A fast strategy would be to open the yaml view and go with all the defaults - the only addition to be to add this `knative-serving-cert` secret.
 
 ```yaml
 spec:
@@ -60,23 +61,24 @@ spec:
 ```
 
 Documentation you may find helpful is:
+
 - https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html/serving_models/index
 - https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html/serving_models/serving-large-models_serving-large-models
-
 
 ## 3.4 - Set up your OpenShift AI project and workbench
 
 An OpenShift AI project maps directly to an OpenShift project, enjoying the same RBAC and isolation capailities.
+
 OpenShift AI Workbenches pertain to a base container image, encapsulating a particular toolset used by the data scientists, e.g. Pytorch, Tensorflow etc.
 
-Now open OpenShift AI and do the following
-- create a project
-- create a workbench that 
-  - uses Pytorch as a basis
-  - uses a Large container size
-  - uses a Persistent Volume of at least 80GB 
-  - uses a Data Connection to your Minio object storage
-  - uses a Medium sized Container without an accelerator
+Time to finish this demo prep, you OpenShift AI and do the following:
+
+- create a project named `model-speedrun`
+- create a workbench `model-speedrun-wb` that:
+  - uses `Pytorch` as a basis
+  - uses a `Large` container size
+  - uses a Persistent Volume of at least `80GB`
+  - uses a Data Connection to your minio object storage
 
 Documentation you may find helpful is:
 
@@ -84,35 +86,29 @@ Documentation you may find helpful is:
 
 - https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html/getting_started_with_red_hat_openshift_ai_self-managed/creating-a-workbench-select-ide_get-started
 
-## 3.5 - Use your cloud-based OpenShift AI to Serve the model and make it easily consumable by intelligent applications for inference
+## 3.5 - Service the model
 
-Single Model Serving is the preferred mode for serving LLMs
+vLLM is a popular model server format whose APIs are compatible with Open AI (Chat GPT) APIs. This format then lends itself to easy migration of apps already using Open AI - to OpenShift AI. For your demo you will use **Single Model Serving**.
 
-### 3.5.1 - Single Model Serving
+Add a vLLM model server called `model-speedrun` that uses a data connection to your cluster's object storage and the subfolder of its `models` bucket that contains your Granite model.
 
-vLLM is a popular model server format whose APIs are compatible with Open AI (Chat GPT) APIs. This format then lends itself to easy migration of apps already using Open AI - to OpenShift AI.
-
-Add a vLLM model server called `model-speedrun` that uses a Data Connection to your cloud cluster's Minio and the subfolder of its `models` bucket that contains your Granite model
 Documentation you may find helpful is:
+
 - https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html-single/serving_models/index#enabling-the-single-model-serving-platform_serving-large-models
 
+### 3.6 - Make an inference call to your model
 
-### 3.5.2 - Make an inference call to your model
+Anxiously watching the clock in your laptops taskbar you wait the five minutes or so for your model server to become ready with an inference URL so you can test everything is working before you join the call with the ACME Financial Services team.
 
-After perhaps 5 mins, your model server should be ready - with an Inference URL
-
-You challenge is to make an inference API call. 
-
-Free hint: the Fast API (Swagger) interface is a quick and effective way to do this
-
-Free hint: no Authorisation or credentials should be necessary
+Free hint: the Fast API (Swagger) interface is a quick and effective way to make the test inference call (no Authorisation or credentials should be necessary).
 
 Documentation you may find helpful is:
+
 - https://docs.redhat.com/en/documentation/red_hat_openshift_ai_self-managed/2.10/html-single/serving_models/index#making-inference-requests-to-models-deployed-on-single-model-serving-platform_serving-large-models
 
-## 3.6 - Check your work
+## 3.7 - Check your work
 
-To complete this challenge, take a screenshot showing Fast API inference call and response payload.
+To complete this challenge, take a screenshot showing Fast API inference call and response payload which should include an `OK 200`.
 
 Once done, please post a message in `#event-anz-ocp-ai-hackathon` with the screenshot and message:
 
