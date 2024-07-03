@@ -8,73 +8,95 @@ authors: ['default']
 summary: "Demonstrate how Red Hat enables non-data-science users to `instruction-tune` AI models, using some simple RHEL-AI and Instruct Lab tooling"
 ---
 
-While the ACME Financial Services (ACME FS) team is evaluating OpenShift AI they admit that they are on the GenAI hype train and that train is gaining momentum amongst the ACME executive ranks. They did a lot of experimentation, finetuning, RAG, prompt engineering, but they just found that the hallucinations increased the more finetuning they do, and even the most well engineered prompts would not be a 100% guarantee of the GenAI model not hallucinating.
-So the announcement of Instruct LAB is pretty much what they've been looking for.
+While the ACME Financial Services team is evaluating OpenShift AI they admit that they are on the GenAI hype train and that train is gaining momentum amongst the ACME executive ranks. 
+
+They did a lot of experimentation, fine tuning, retrieval augmented generation and prompt engineering, but they just found that the hallucinations increased the more fine tuning they do, and even the most well engineered prompts would not be a 100% guarantee of the GenAI model not hallucinating.
+
+The team recently heard the announcement for [InstructLab](https://instructlab.ai) which sounds exactly like what they are looking for.
 
 Your challenge is to help ACME by showcasing the following things:
+
 1) Setup the InstructLab environment - use the showroom UI if you feel a need for speed.
 2) Chat with the model (student model) and see what it knows about itself (InstructLab)
-3) Add new knowledge 
+3) Add new knowledge
 4) Generate synthetic data (via a teacher model) - this will take approx 15 minutes
 5) Show proof that the synthetic data generation has happened
 6) Train the student model to integrate the new knowledge - this will take approx 20 minutes
 7) Show proof that the new knowledge is present
 
-## 6.0 - Be in the Know...
+## 6.0 - Be in the know...
+
 - You might want to consider that the synthetic data generation will take approx 15min and the model training approx 20min.
 
 Documentation you may find helpful is:
+
 - https://github.com/instructlab/instructlab
 - FYI - In case you want to build your RHEL AI image yourself later, have a look at the dev preview approach here: https://github.com/RedHatOfficial/rhelai-dev-preview
 
-## 6.1 - Setting Up
-The ACMEFS team wants to start with a true blue through-and-through open source approach. This means a model that's available as open source and which was trained on open source data and hence they want to use the Granite model familiy. For that your job as the supporting Red Hatter is to help the team show how to download a model and serve it.
+## 6.1 - Setting up
+
+The ACME team wants to start with a true blue through-and-through open source approach. This means a model that's available as open source and which was trained on open source data and hence they want to use the Granite model familiy. 
+
+For that your job as the supporting Red Hatter is to show the team how to download a model and serve it.
+
 - Go to demo.redhat.com and order your teams' InstructLab RHEL VM (Nvidia/CUDA) environment
 - Use the virtual python environment if you want GPU acceleration
-- Install the instruct lab command line tooling - make sure it's version v0.16.1
-- Download the granite model from instructlab/granite-7b-lab-GGUF and name it 'granite-7b-lab-Q4_K_M.gguf'
-- Serve the Model
+- Install the instruct lab command line tooling - make sure it's version `v0.16.1`
+- Download the granite model from `instructlab/granite-7b-lab-GGUF` and name it `granite-7b-lab-Q4_K_M.gguf`
+- Serve the model
 
 ## 6.2 - Chat and test knowledge
+
 The team now wants to first try and test-drive the newly downloaded model by chatting with it to get a feel for a Granite model.
+
 - Chat with the model and test its knowledge about Instruct Lab 
-If you find the answers somewhat peculiar, your mission is to fix that - should you accept it. And no, this message will not self-destruct. Should you be happy with the answer you can select a different knowledge area to improve.
+
+If you find the answers somewhat peculiar, your mission is to fix that - should you accept it. And no, this message will not self-destruct 😂. Should you be happy with the answer you can select a different knowledge area to improve.
 
 ## 6.3 - Add new knowledge
+
 The real reason organisations want to use AI is because they can encode institutional knowledge that leads to either a competitive advtange or reducing cost by supporting internal processes. With finetuning this is hard to accomplish as models seem to struggle with connecting new and unknown content with existing pre-trained content. That's why model alignment is such a gamechanger. It allows organisations to encode their knowledge into an AI model, the same way RDMBS databases allowed  data or 'knowledge' to be connected and related to via foreign keys back in the days. Now you show how this is done with InstructLab by adding new knowledge to their Granite foundation model:
-- Utilise the existing InstructLab taxonomy on your image
-- Add new knowledge (the InstructLab example knowledge file containing InstructLab knowledge is at ~/files/qna.yaml)
+
+- Use the existing InstructLab taxonomy on your image
+- Add new knowledge (the InstructLab example knowledge file containing InstructLab knowledge is at `~/files/qna.yaml`)
 - Show ACME how to verify that the taxonomy tree is A-OK before you proceed.
 
 ## 6.4 - Generate synthetic data
+
 Once you are confident that your taxonomy tree is ok you are now showing how synthetic data is generated:
+
 - Generate new synthetic data with a teacher model 
 - Discuss: Does synthetic data generation need a model being served? Why/Why not?
 
 ## 6.5 - Verify expected outcomes
-You now proof to the ACME FS team that there was indeed synthetic data generated:
+
+You challenge now is proving to the ACME team that there was indeed synthetic data generated:
+
 - Verify the synthetic data generation via the critic model by looking into the newly generated `/home/instruct/instructlab/generated` directory and verifying that there are files in it
 - Discuss: Does the critic model _need_ to be a different model compared to the student or teacher model?
 - Create a screenshot showing the files generated via the generate phase and the discarded data from the critic model and post it into the slack channel.
 
-(not so) Fun Fact: The upstream version of ilab doesn't actually use a critic model at the moment, it just checks for format errors. RHEL AI will use a critic model.
+(not so) Fun Fact: The upstream version of `ilab` doesn't actually use a critic model at the moment, it just checks for format errors. RHEL AI will use a critic model.
 
 ## 6.6 - Train the student model
+
 Now as you have shown that new data is available you use this data to instruction-tune / train (or align) the existing granite model with the new data
+
 - Discuss: Does training require a model being served? Why or Why not?
 - Decide if you want hardware acceleration, let iLab know when kicking off training the model
 - Discuss: When would you / should you use quantisation?
 
-The ACMFS team has experiemented in the past with quantization, they know how it works so no need to show that now, they are more interested in seeing the new data being baked into the new version of the granite model.
+The ACME team has experiemented in the past with quantization, they know how it works so no need to show that now, they are more interested in seeing the new data being baked into the new version of the granite model.
 
 ## 6.7 - Chat & verify newly added knowledge
+
 - Chat with the newly trained model and check if it has the additional knowledge you added.
-- Create a screenshot of the model served as well as the model prompt and answer and post it in the slack channel.
+- Create a screenshot of the model served as well as the model prompt and answer and post it in the slack channel `#event-anz-ocp-ai-hackathon` with the message:
 
-## 6.8 - Hints!
-The first hint is free: In scenario 6, you will need to provision 15 minutes time for synthetic data generation as well as 20 minutes for model training. You might want to make this part of your execution strategy.
+> Please review [team name] solution for exercise 6.
 
-# HINTS
+## Hints
+
 If you get stuck on a question, fear not, perhaps try a different approach. If you have tried everything you can think of and are still stuck you can hire a contractor by posting a message in the `#event-anz-ocp-ai-hackathon` channel with the message:
 
 > [team name] are stuck on [exercise] and are hiring a contractor.
@@ -83,4 +105,3 @@ A services contractor will join your breakout room to sell the hint to you 🤫.
 
 This exercise is worth `750k`. If you engage the services of the contractor (by obtaining a hint from the hackathon moderators), it will cost you `25k`, which will be deducted from the respective challenge's deal value to your team.
 The event team will reply in slack to confirm your updated team total deal size.
-
