@@ -13,20 +13,15 @@ The ACME team is using more traditional `Predictive AI` use case that uses an ob
 
 Their Data Science team have already deployed such a model, in a similar fashion to the model server you deployed earlier.
 
-You challenge is to integrate their web application with the AI model. You will need to a) deploy it, b) configure it to talk to the model server.
+Your challenge is to integrate their web application with the AI model. You will need to a) deploy it, b) configure it to talk to the model server.
 
 ## 5.1 - Deploy Application
 Your first task to deploy the web application inside a new OpenShift project to house this web app.
 
-## 5.1.1 - Deploy Application helper
-Prior to your challenge, there is a helper deployment, that you will require. The first thing you will need to do is deply that. Here it is:
-https://raw.githubusercontent.com/rh-aiservices-bu/mad_m6_workshop/main/deployment/pre_post_processor_deployment.yaml
-
-## 5.1.2 - Deploy the application.
 Here are some data point you will require
 - the container image for the web app is here: quay.io/rh-aiservices-bu/mad-m6-workshop-intelligent-application:latest
 - These Environment variables should be set:
- - OBJECT_DETECTION_URL: The model server host with path `/predictions` appended
+ - OBJECT_DETECTION_URL: The model inference API `https://ia-inference-user1.apps.cluster-dftrf.sandbox944.opentlc.com/predictions`
  - DISPLAY_BOX: true
 
 
