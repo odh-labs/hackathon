@@ -8,42 +8,47 @@ authors: ['default']
 summary: "Let's show integration between AI and Intelligent Application workloads, and the effieciencies acheived by using one platform for both"
 ---
 
-The ACME Financial Services team are underway with the OpenShift AI Proof of Concept and are now in position to integrate the AI model with a client application that uses the model for inference.
-The ACME team is using more traditional `Predictive AI` use case that uses an object detection AI model to determine what object appears inside a webpage that uses a webcam to detect certain objects.
+The ACME Financial Services team are underway with the OpenShift AI proof of concept and are now in position to integrate the AI model with a client application that uses the model for inference.
+
+The ACME team is using more traditional **Predictive AI** use case that uses an object detection AI model to determine what object appears inside a webpage that uses a webcam to detect certain objects.
 
 Their Data Science team have already deployed such a model, in a similar fashion to the model server you deployed earlier.
 
 Your challenge is to integrate their web application with the AI model. You will need to a) deploy it, b) configure it to talk to the model server.
 
-## 5.1 - Deploy Application
-Your first task to deploy the web application inside a new OpenShift project to house this web app.
+## 5.1 - Deploy application
 
-Here are some data point you will require
-- the container image for the web app is here: quay.io/rh-aiservices-bu/mad-m6-workshop-intelligent-application:latest
+Your first task to deploy the web application inside a new OpenShift project named `intelligent-application-[team-name]` to house this web app.
+
+Here are some data point you will require:
+
+- the container image for the web app is here: `quay.io/rh-aiservices-bu/mad-m6-workshop-intelligent-application:latest`
 - These Environment variables should be set:
- - OBJECT_DETECTION_URL: The model inference API `https://ia-inference-user1.apps.cluster-dftrf.sandbox944.opentlc.com/predictions`
- - DISPLAY_BOX: true
-
+- `OBJECT_DETECTION_URL:` The model inference API `https://ia-inference-user1.apps.cluster-dftrf.sandbox944.opentlc.com/predictions`
+- `DISPLAY_BOX: true`
 
 Documentation you may find helpful is:
+
 - https://docs.redhat.com/en/documentation/openshift_container_platform/4.15/html/building_applications/creating-applications#odc-deploying-container-image_odc-creating-applications-using-developer-perspective
 - https://docs.openshift.com/container-platform/3.11/dev_guide/environment_variables.html
 
+## 5.2 - Test application
 
-## 5.2 - Test Application
-Once you have deployed your application, open its Route in the Developer > Topology view.
+Once you have deployed your application, open its `route` in the **Developer > Topology** view.
 You will need to allow webcam access to the application. Go ahead and take a photo. It should detect any of these:
+
 - bottles
 - caps/hats
 - tshirts
 The app should draw a bounding box around any of these - or indeed of anything you placed in front of the webcam and snapped a shot.
 
-
 ## 5.3 - Check your work
-If your ACME Financial Services web app has successfully made an inference call to the Object Detection AI model server, it should have drawn a bounding box on the screen.
-Please post a screenshot of it to  #event-anz-ai-hackathon with the message:
 
-Please review [team name] solution for exercise 5.
+If your ACME Financial Services intelligent web app has successfully made an inference call to the Object Detection AI model server, it should have drawn a bounding box on the screen.
+
+Please post a screenshot of it to `#event-anz-ocp-ai-hackathon` with the message:
+
+> Please review [team name] solution for exercise 5.
 
 This exercise is worth `750k`. If you engage the services of the contractor (by obtaining a hint from the hackathon moderators), it will cost you `25k`, which will be deducted from the respective challenge's deal value to your team.
 The event team will reply in slack to confirm your updated team total deal size.
