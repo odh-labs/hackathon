@@ -61,7 +61,7 @@
     "lint-staged": "^15.2.9",
     "next-remote-watch": "^2.0.0",
     "prettier": "^3.3.2",
-    "prettier-plugin-tailwindcss": "^0.2.1",
+    "prettier-plugin-tailwindcss": "^0.6.8",
     "socket.io": "^4.4.0",
     "socket.io-client": "^4.4.0"
   },
